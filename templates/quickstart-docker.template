@@ -71,7 +71,7 @@
         },
         "License": {
             "Type": "String",
-            "Description": "License in S3 Location (https://s3.amazonaws.com/somebucket/docker_subscription.lic)"
+            "Description": "License file S3 Location (e.g. https://s3.amazonaws.com/somebucket/docker_subscription.lic)"
         }
     },
     "Metadata" : {
