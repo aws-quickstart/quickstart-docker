@@ -17,6 +17,6 @@
     },
     {
         "ParameterKey": "License",
-        "ParameterValue": "https://s3-us-west-2.amazonaws.com/quickstart-ci-licenses/docker/docker_subscription.lic"
+        "ParameterValue": "https://s3.amazonaws.com/quickstart-temp-lic/docker/docker_subscription.lic"
     }
 ]
