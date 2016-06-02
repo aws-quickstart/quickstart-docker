@@ -71,7 +71,7 @@
         },
         "License": {
             "Type": "String",
-            "Description": "License in JSON format"
+            "Description": "License in S3 Location (https://s3.amazonaws.com/somebucket/docker_subscription.lic)"
         }
     },
     "Metadata" : {
@@ -86,7 +86,7 @@
         "Parameters" : [ "ClusterSize", "InstanceType", "KeyName" ]
       },
       {
-        "Label" : { "default": "Docker Datacenter License" },
+        "Label" : { "default": "Docker Datacenter License S3 Location" },
         "Parameters" : [ "License" ]
       }
     ]
@@ -809,11 +809,11 @@
                                         [
                                             "#!/bin/bash -ex\n",
                                             "export PRIVATE_IP=`curl http://169.254.169.254/latest/meta-data/local-ipv4`\n",
-                                            "echo '",
+                                            "curl ",
                                             {
                                                 "Ref": "License"
                                             },
-                                            "' >> /home/ubuntu/docker_subscription.lic \n",
+                                            " -O /home/ubuntu/docker_subscription.lic \n",
                                             "sudo docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/ubuntu/docker_subscription.lic:/docker_subscription.lic -e UCP_ADMIN_PASSWORD=ddconaws --name ucp docker/ucp:1.1.0 install --host-address $PRIVATE_IP --san $PRIVATE_IP --san ",
                                             {
                                                 "Ref": "UCPFQDN"
