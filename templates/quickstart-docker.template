@@ -809,11 +809,21 @@
                                         [
                                             "#!/bin/bash -ex\n",
                                             "export PRIVATE_IP=`curl http://169.254.169.254/latest/meta-data/local-ipv4`\n",
-                                            "curl -s ",
+                                            "echo \"Loading License\" \n",
+                                            "INPUT='", 
                                             {
-                                                "Ref": "License"
+                                            "Ref": "License" 
                                             },
-                                            " >> /home/ubuntu/docker_subscription.lic \n",
+                                            "'",
+                                            "if [[  '${INPUT:0:1}' == '\\{' ]]\n",
+                                            "echo Getting License from $INPUT \n",
+                                            "echo \"Using Json Direct Input\" \n",
+                                            "echo $INPUT >> /home/ubuntu/docker_subscription.lic \n",
+                                            "elif [[  '${INPUT:0:4}' == \"http\" ]]\n",
+                                            "then echo \"Using s3 license file\" \n",
+                                            "curl -s $INPUT >>/home/ubuntu/docker_subscription.lic \n",
+                                            "else echo \"License input must be a valid s3 location or json license key\" \n",
+                                            "fi \n",
                                             "sudo docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/ubuntu/docker_subscription.lic:/docker_subscription.lic -e UCP_ADMIN_PASSWORD=ddconaws --name ucp docker/ucp:1.1.0 install --host-address $PRIVATE_IP --san $PRIVATE_IP --san ",
                                             {
                                                 "Ref": "UCPFQDN"
