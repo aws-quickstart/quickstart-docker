@@ -814,7 +814,7 @@
                                             {
                                             "Ref": "License" 
                                             },
-                                            "'",
+                                            "'\n",
                                             "if [[ ${INPUT:0:1} == '{' ]]\n",
                                             "then echo \"Getting License from $INPUT\" \n",
                                             "echo \"Using Json Direct Input\" \n",
