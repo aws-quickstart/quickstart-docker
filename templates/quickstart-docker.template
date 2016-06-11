@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "QS(0025) Docker Datacenter Quickstart for AWS, Version 0.1, May 2016",
+    "Description": "QS(0025) Docker Datacenter Quickstart for AWS, Version 1.0, June 2016",
     "Parameters": {
         "KeyName": {
             "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances",
@@ -22,9 +22,81 @@
             "Default": "localhost",
             "Description": "FQDN, including subdomain, for DTR (e.g. dtr.example.com). Must be subdomain of selected Route53 HostedZone"
         },
-        "InstanceType": {
+        "UCPControllersInstanceType": {
             "Type": "String",
-            "Description": "EC2 HVM instance type (t2.micro, m3.medium, etc).",
+            "Description": "EC2 HVM instance type for UCP Controllers only (minimum is m3.medium).",
+            "AllowedValues": [
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge",
+                "m4.10xlarge",
+                "m3.medium",
+                "m3.large",
+                "m3.xlarge",
+                "m3.2xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "c3.large",
+                "c3.xlarge",
+                "c3.2xlarge",
+                "c3.4xlarge",
+                "c3.8xlarge",
+                "r3.large",
+                "r3.xlarge",
+                "r3.2xlarge",
+                "r3.4xlarge",
+                "r3.8xlarge",
+                "i2.xlarge",
+                "i2.2xlarge",
+                "i2.4xlarge",
+                "i2.8xlarge"
+            ],
+            "ConstraintDescription": "Must be a valid EC2 HVM instance type.",
+            "Default": "m3.medium"
+        },
+        "DTRInstanceType": {
+            "Type": "String",
+            "Description": "EC2 HVM instance type for DTR Replicas only (minimum is m3.medium).",
+            "AllowedValues": [
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge",
+                "m4.10xlarge",
+                "m3.medium",
+                "m3.large",
+                "m3.xlarge",
+                "m3.2xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "c3.large",
+                "c3.xlarge",
+                "c3.2xlarge",
+                "c3.4xlarge",
+                "c3.8xlarge",
+                "r3.large",
+                "r3.xlarge",
+                "r3.2xlarge",
+                "r3.4xlarge",
+                "r3.8xlarge",
+                "i2.xlarge",
+                "i2.2xlarge",
+                "i2.4xlarge",
+                "i2.8xlarge"
+            ],
+            "ConstraintDescription": "Must be a valid EC2 HVM instance type.",
+            "Default": "m3.medium"
+        },
+        "UCPNodesInstanceType": {
+            "Type": "String",
+            "Description": "EC2 HVM instance type for UCP Nodes only",
             "AllowedValues": [
                 "t2.micro",
                 "t2.small",
@@ -60,33 +132,33 @@
                 "i2.8xlarge"
             ],
             "ConstraintDescription": "Must be a valid EC2 HVM instance type.",
-            "Default": "t2.micro"
+            "Default": "m3.medium"
         },
         "ClusterSize": {
             "Type": "Number",
             "Default": "3",
             "MinValue": "3",
-            "MaxValue": "12",
-            "Description": "Number of nodes in the UCP cluster (3-12)."
+            "MaxValue": "64",
+            "Description": "Number of UCP nodes (non-controller) in the cluster (3-64)."
         },
         "License": {
             "Type": "String",
-            "Description": "License file S3 Location (e.g. https://s3.amazonaws.com/somebucket/docker_subscription.lic)"
+            "Description": "Docker Datacenter License in JSON format. Get Trial License here : https://hub.docker.com/enterprise/trial/ "
         }
     },
     "Metadata" : {
   "AWS::CloudFormation::Interface" : {
     "ParameterGroups" : [
       {
-        "Label" : { "default" : "DNS Configuration" },
+        "Label" : { "default" : "UCP and DTR DNS Configuration" },
         "Parameters" : [ "HostedZone", "DTRFQDN", "UCPFQDN" ]
       },
       {
         "Label" : { "default": "Cluster Configuration" },
-        "Parameters" : [ "ClusterSize", "InstanceType", "KeyName" ]
+        "Parameters" : [ "ClusterSize", "UCPControllersInstanceType","DTRInstanceType","UCPNodesInstanceType", "KeyName" ]
       },
       {
-        "Label" : { "default": "Docker Datacenter License S3 Location" },
+        "Label" : { "default": "Docker Datacenter License" },
         "Parameters" : [ "License" ]
       }
     ]
@@ -230,27 +302,27 @@
                 "HVMG2": "NOT_SUPPORTED"
             },
             "us-west-1": {
-                "HVM64": "NOT_SUPPORTED",
+                "HVM64": "ami-31106a51",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "eu-west-1": {
-                "HVM64": "NOT_SUPPORTED",
+                "HVM64": "ami-8328bbf0",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "eu-central-1": {
-                "HVM64": "NOT_SUPPORTED",
+                "HVM64": "ami-74ee001b",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "ap-northeast-1": {
-                "HVM64": "NOT_SUPPORTED",
+                "HVM64": "ami-bb32ddda",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "ap-southeast-1": {
-                "HVM64": "NOT_SUPPORTED",
+                "HVM64": "ami-c4ae7ea7",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "ap-southeast-2": {
-                "HVM64": "NOT_SUPPORTED",
+                "HVM64": "ami-d5cae4b6",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "sa-east-1": {
@@ -264,6 +336,9 @@
         }
     },
     "Resources": {
+      "DDCBucket" : {
+      "Type" : "AWS::S3::Bucket"
+    },
         "vpc": {
             "Type": "AWS::EC2::VPC",
             "Properties": {
@@ -480,6 +555,7 @@
             }
         },
         "AttachGateway": {
+            "DependsOn": "InternetGateway",
             "Type": "AWS::EC2::VPCGatewayAttachment",
             "Properties": {
                 "VpcId": {
@@ -491,6 +567,7 @@
             }
         },
         "RouteViaIgw": {
+            "DependsOn": "AttachGateway",
             "Type": "AWS::EC2::RouteTable",
             "Properties": {
                 "VpcId": {
@@ -499,6 +576,7 @@
             }
         },
         "PublicRouteViaIgw": {
+
             "Type": "AWS::EC2::Route",
             "Properties": {
                 "RouteTableId": {
@@ -533,7 +611,7 @@
             }
         },
         "NATAZ1": {
-            "DependsOn": "AttachGateway",
+
             "Type": "AWS::EC2::NatGateway",
             "Properties": {
                 "AllocationId": {
@@ -548,6 +626,7 @@
             }
         },
         "EIP1": {
+            "DependsOn": "AttachGateway",
             "Type": "AWS::EC2::EIP",
             "Properties": {
                 "Domain": "vpc"
@@ -585,7 +664,7 @@
             }
         },
         "NATAZ2": {
-            "DependsOn": "AttachGateway",
+
             "Type": "AWS::EC2::NatGateway",
             "Properties": {
                 "AllocationId": {
@@ -600,6 +679,7 @@
             }
         },
         "EIP2": {
+            "DependsOn": "AttachGateway",
             "Type": "AWS::EC2::EIP",
             "Properties": {
                 "Domain": "vpc"
@@ -636,24 +716,37 @@
                 }
             }
         },
-        "WideOpenVpcSG": {
+    "DefaultSG": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
                 "VpcId": {
                     "Ref": "vpc"
                 },
-                "GroupDescription": "Wide open",
-                "SecurityGroupIngress": [
-                    {
-                        "IpProtocol": "-1",
-                        "FromPort": "0",
-                        "ToPort": "65535",
-                        "CidrIp": "0.0.0.0/0"
-                    }
-                ]
-            }
-        },
-        "ELBAlias": {
+                "GroupDescription": "Default VPC Security Group. Allows only port 443 externally and all traffic from within the Security Group."
+                }
+    },
+
+     "AllTrafficSecurityGroupIngress" : {
+         "Type" : "AWS::EC2::SecurityGroupIngress",
+         "Properties" : {
+             "GroupId" : { "Ref" : "DefaultSG" },
+             "IpProtocol" : "-1",
+             "ToPort" : "-1",
+             "FromPort" : "0",
+             "SourceSecurityGroupId" : { "Ref" : "DefaultSG" }
+         }
+     },
+    "HTTPSSecurityGroupIngress" : {
+         "Type" : "AWS::EC2::SecurityGroupIngress",
+         "Properties" : {
+             "GroupId" : { "Ref" : "DefaultSG" },
+             "IpProtocol" : "tcp",
+             "ToPort" : "443",
+             "FromPort" : "443",
+             "CidrIp": "0.0.0.0/0"
+         }
+     },
+    "ELBAlias": {
             "Type": "AWS::Route53::RecordSetGroup",
             "Properties": {
                 "HostedZoneId": { "Ref": "HostedZone" },
@@ -735,8 +828,44 @@
                 "Timeout": "900"
             }
         },
+        "ControllerRole": {
+           "Type": "AWS::IAM::Role",
+           "Properties": {
+              "AssumeRolePolicyDocument": {
+                 "Version" : "2012-10-17",
+                 "Statement": [ {
+                    "Effect": "Allow",
+                    "Principal": {
+                       "Service": [ "ec2.amazonaws.com" ]
+                    },
+                    "Action": [ "sts:AssumeRole" ]
+                 } ]
+              },
+              "Path": "/",
+              "Policies": [ {
+                 "PolicyName": "root",
+                 "PolicyDocument": {
+                    "Version" : "2012-10-17",
+                    "Statement": [ {
+                       "Effect": "Allow",
+                       "Action": ["s3:PutObject", "s3:GetObject"],
+                       "Resource": {"Fn::Join": ["", [ "arn:aws:s3:::", {"Ref" : "DDCBucket"}, "/*" ] ] }
+                    } ]
+                 }
+                 } ]
+              }
+        },
+        "ControllerProfile": {
+           "Type": "AWS::IAM::InstanceProfile",
+           "Properties": {
+              "Path": "/",
+              "Roles": [ {
+                 "Ref": "ControllerRole"
+              } ]
+           }
+        },
         "Controller": {
-            "DependsOn": "InternetGateway",
+            "DependsOn": "NatAZ1Route",
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "AvailabilityZone": {
@@ -750,7 +879,7 @@
                     ]
                 },
                 "InstanceType": {
-                    "Ref": "InstanceType"
+                    "Ref": "UCPControllersInstanceType"
                 },
                 "KeyName": {
                     "Ref": "KeyName"
@@ -765,7 +894,7 @@
                             "Fn::FindInMap": [
                                 "AWSInstanceType2Arch",
                                 {
-                                    "Ref": "InstanceType"
+                                    "Ref": "UCPControllersInstanceType"
                                 },
                                 "Arch"
                             ]
@@ -778,11 +907,11 @@
                         "DeleteOnTermination": "true",
                         "DeviceIndex": "0",
                         "SubnetId": {
-                            "Ref": "PubSubnetAz1"
+                            "Ref": "PrivateSubnetAz1"
                         },
                         "GroupSet": [
                             {
-                                "Ref": "WideOpenVpcSG"
+                                "Ref": "DefaultSG"
                             }
                         ]
                     }
@@ -793,10 +922,19 @@
                             "\n",
                             [
                                 "#!/bin/bash -ex",
-                                "#Install CFN-helper package + Docker",
-                                "sudo hostname ucp-controller\n",
+                                "apt-get install unzip",
+                                "echo 'Install AWS CLI'",
+                                "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\"",
+                                "unzip awscli-bundle.zip",
+                                "./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws",
+                                "echo 'Installing Docker'",
+                                "sudo hostname ucp-controller",
+                                "export HOSTNAME=ucp-controller \n",
+                                "sudo sed -i 's/localhost/ucp-controller/g' /etc/hosts \n",
+                                "echo $HOSTNAME | sudo tee  /etc/hostname \n",
                                 "curl -sSL https://packages.docker.com/1.11/install.sh | sh \n",
                                 "sudo usermod -aG docker ubuntu \n",
+                                "echo 'Install CFN-helper Package' ",
                                 "apt-get -y install python-pip",
                                 "pip install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz",
                                 "cp /usr/local/init/ubuntu/cfn-hup /etc/init.d/cfn-hup",
@@ -824,9 +962,24 @@
                                             "curl -s $INPUT >>/home/ubuntu/docker_subscription.lic \n",
                                             "else echo \"License input must be a valid s3 location or json license key\" \n",
                                             "fi \n",
-                                            "sudo docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/ubuntu/docker_subscription.lic:/docker_subscription.lic -e UCP_ADMIN_PASSWORD=ddconaws --name ucp docker/ucp:1.1.0 install --host-address $PRIVATE_IP --san $PRIVATE_IP --san ",
+                                            "sudo docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /home/ubuntu/docker_subscription.lic:/docker_subscription.lic -e UCP_ADMIN_PASSWORD=ddconaws --name ucp docker/ucp:1.1.1 install --host-address $PRIVATE_IP --san $PRIVATE_IP --san ",
                                             {
                                                 "Ref": "UCPFQDN"
+                                            },
+                                            "\n",
+                                            "sleep 3 \n",
+                                            "echo 'Create Root CA Backup' \n",
+                                            "export ID=$(sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 id) \n",
+                                            "sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 backup --root-ca-only --id $ID --passphrase 'ddconaws' > certs.backup.tar \n",
+                                            "echo 'Copy cert bundle to S3' \n",
+                                            "aws s3 cp certs.backup.tar s3://",
+                                            {"Ref" : "DDCBucket"},
+                                            "/cabackup/",
+                                            {"Ref" : "UCPFQDN"},
+                                            ".certs.backup.tar",
+                                            " --region ",
+                                            {
+                                         "Ref": "AWS::Region"
                                             },
                                             "\n",
                                             "# Wait Handle: Controller tests itself to ensure it's responding before signaling CFN. Try in an infinite loop. Wait Handle will tear down stack if timeout exceeded\n",
@@ -851,6 +1004,7 @@
                         ]
                     }
                 },
+                "IamInstanceProfile": {"Ref": "ControllerProfile"},
                 "Tags": [
                     {
                         "Key": "Name",
@@ -921,7 +1075,7 @@
                     }
                 ],
                 "ConnectionSettings": {
-                    "IdleTimeout": 30
+                    "IdleTimeout": 600
                 },
                 "Listeners": [
                     {
@@ -939,7 +1093,7 @@
                 },
                 "SecurityGroups": [
                     {
-                        "Ref": "WideOpenVpcSG"
+                        "Ref": "DefaultSG"
                     }
                 ]
             }
@@ -967,7 +1121,7 @@
                     "Ref": "UCPNode"
                 },
                 "MinSize": "3",
-                "MaxSize": "12",
+                "MaxSize": "64",
                 "DesiredCapacity": {
                     "Ref": "ClusterSize"
                 },
@@ -996,7 +1150,7 @@
             "Type": "AWS::AutoScaling::LaunchConfiguration",
             "Properties": {
                 "InstanceType": {
-                    "Ref": "InstanceType"
+                    "Ref": "UCPNodesInstanceType"
                 },
                 "KeyName": {
                     "Ref": "KeyName"
@@ -1011,7 +1165,7 @@
                             "Fn::FindInMap": [
                                 "AWSInstanceType2Arch",
                                 {
-                                    "Ref": "InstanceType"
+                                    "Ref": "UCPNodesInstanceType"
                                 },
                                 "Arch"
                             ]
@@ -1021,7 +1175,7 @@
                 "AssociatePublicIpAddress": "true",
                 "SecurityGroups": [
                     {
-                        "Ref": "WideOpenVpcSG"
+                        "Ref": "DefaultSG"
                     }
                 ],
                 "UserData": {
@@ -1030,6 +1184,7 @@
                             "",
                             [
                                 "#!/bin/bash\n",
+                                "# Installing Docker",
                                 "export PRIVATE_IP=`curl http://169.254.169.254/latest/meta-data/local-ipv4`\n",
                                 "curl -sSL https://packages.docker.com/1.11/install.sh | sh \n",
                                 "sudo usermod -aG docker ubuntu \n",
@@ -1043,7 +1198,7 @@
                                 "\n",
                                 "curl --insecure $UCP_URL/ca > ca.pem\n",
                                 "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
-                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.0 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n"
+                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n"
                             ]
                         ]
                     }
@@ -1051,7 +1206,7 @@
             }
         },
         "ControllerReplicaAsg": {
-            "DependsOn": "WaitCondition01",
+            "DependsOn": "NatAZ2Route",
             "Type": "AWS::AutoScaling::AutoScalingGroup",
             "Properties": {
                 "VPCZoneIdentifier": [
@@ -1102,8 +1257,9 @@
             "Type": "AWS::AutoScaling::LaunchConfiguration",
             "Properties": {
                 "InstanceType": {
-                    "Ref": "InstanceType"
+                    "Ref": "UCPControllersInstanceType"
                 },
+                "IamInstanceProfile": {"Ref": "ControllerProfile"},
                 "KeyName": {
                     "Ref": "KeyName"
                 },
@@ -1117,7 +1273,7 @@
                             "Fn::FindInMap": [
                                 "AWSInstanceType2Arch",
                                 {
-                                    "Ref": "InstanceType"
+                                    "Ref": "UCPControllersInstanceType"
                                 },
                                 "Arch"
                             ]
@@ -1126,7 +1282,7 @@
                 },
                 "SecurityGroups": [
                     {
-                        "Ref": "WideOpenVpcSG"
+                        "Ref": "DefaultSG"
                     }
                 ],
                 "UserData": {
@@ -1135,7 +1291,16 @@
                             "",
                             [
                                 "#!/bin/bash\n",
+                                "apt-get install unzip\n",
+                                "echo 'Install AWS CLI'\n",
+                                "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\"\n",
+                                "unzip awscli-bundle.zip\n",
+                                "./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws\n",
+                                "echo 'Installing Docker'",
                                 "sudo hostname ucp-controller-replica\n",
+                                "export HOSTNAME=ucp-controller-replica \n",
+                                "sudo sed -i 's/localhost/controller-replica/g' /etc/hosts \n",
+                                "echo $HOSTNAME | sudo tee  /etc/hostname \n",
                                 "export PRIVATE_IP=`curl http://169.254.169.254/latest/meta-data/local-ipv4`\n",
                                 "curl -sSL https://packages.docker.com/1.11/install.sh | sh \n",
                                 "sudo usermod -aG docker ubuntu \n",
@@ -1149,11 +1314,29 @@
                                 "\n",
                                 "curl --insecure $UCP_URL/ca > ca.pem\n",
                                 "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
-                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.0 join  --replica  --url $UCP_URL --fingerprint $UCP_FINGERPRINT --san ",
+                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join  --replica  --url $UCP_URL --fingerprint $UCP_FINGERPRINT --san ",
                                 {
                                     "Ref": "UCPFQDN"
                                 },
-                                "\n"
+                                "\n",
+                                "echo 'Downloading Root CA from S3' \n",
+                                "aws s3 cp s3://", {
+                                    "Ref" : "DDCBucket"
+                                },
+                                "/cabackup/", {
+                                    "Ref" : "UCPFQDN"
+                                },
+                                ".certs.backup.tar ",
+                                "certs.backup.tar ",
+                                " --region ", {
+                                "Ref": "AWS::Region"
+                                },
+                                "\n",
+                                "echo 'Restoring Root CA' \n",
+                                "export ID=$(sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 id) \n",
+                                "sudo docker run -i --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 restore --id $ID --root-ca-only --passphrase 'ddconaws' < certs.backup.tar \n",
+                                "echo 'Finished Restoring CAs'\n"
+
                             ]
                         ]
                     }
@@ -1175,7 +1358,7 @@
                     ]
                 },
                 "InstanceType": {
-                    "Ref": "InstanceType"
+                    "Ref": "DTRInstanceType"
                 },
                 "KeyName": {
                     "Ref": "KeyName"
@@ -1190,7 +1373,7 @@
                             "Fn::FindInMap": [
                                 "AWSInstanceType2Arch",
                                 {
-                                    "Ref": "InstanceType"
+                                    "Ref": "DTRInstanceType"
                                 },
                                 "Arch"
                             ]
@@ -1203,11 +1386,11 @@
                         "DeleteOnTermination": "true",
                         "DeviceIndex": "0",
                         "SubnetId": {
-                            "Ref": "PubSubnetAz1"
+                            "Ref": "PrivateSubnetAz1"
                         },
                         "GroupSet": [
                             {
-                                "Ref": "WideOpenVpcSG"
+                                "Ref": "DefaultSG"
                             }
                         ]
                     }
@@ -1218,10 +1401,14 @@
                             "\n",
                             [
                                 "#!/bin/bash -ex",
-                                "#Install CFN-helper package + Docker",
+                                "echo 'Installing Docker'",
                                 "sudo hostname dtr-replica-01\n",
+                                "export HOSTNAME=dtr-replica-01 \n",
+                                "sudo sed -i 's/localhost/dtr-replica-01/g' /etc/hosts \n",
+                                "echo $HOSTNAME | sudo tee  /etc/hostname \n",
                                 "curl -sSL https://packages.docker.com/1.11/install.sh | sh \n",
                                 "sudo usermod -aG docker ubuntu \n",
+                                "echo 'Install CFN-helper Package' ",
                                 "apt-get -y install python-pip",
                                 "pip install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz",
                                 "cp /usr/local/init/ubuntu/cfn-hup /etc/init.d/cfn-hup",
@@ -1256,10 +1443,10 @@
                                             "curl --insecure $UCP_URL/ca > ca.pem\n",
                                             "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
                                             "# Installing UCP Node\n",
-                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.0 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
+                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
-                                            "sleep 60 \n",
-                                            "sudo -E docker run --rm -i docker/dtr:2.0.0 install --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-01 --dtr-load-balancer $DTRFQDN:443 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000001 \n",
+                                            "sleep 30 \n",
+                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 install --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-01 --dtr-external-url $DTRFQDN:443 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000001 \n",
                                             "# Wait Handle: DTR tests itself to ensure it's responding before signaling CFN. Try in an infinite loop. Wait Handle will tear down stack if timeout exceeded\n",
                                             "# Defining function:\n",
                                             "checkcontroller()\n",
@@ -1352,7 +1539,7 @@
                     ]
                 },
                 "InstanceType": {
-                    "Ref": "InstanceType"
+                    "Ref": "DTRInstanceType"
                 },
                 "KeyName": {
                     "Ref": "KeyName"
@@ -1367,7 +1554,7 @@
                             "Fn::FindInMap": [
                                 "AWSInstanceType2Arch",
                                 {
-                                    "Ref": "InstanceType"
+                                    "Ref": "DTRInstanceType"
                                 },
                                 "Arch"
                             ]
@@ -1380,11 +1567,11 @@
                         "DeleteOnTermination": "true",
                         "DeviceIndex": "0",
                         "SubnetId": {
-                            "Ref": "PubSubnetAz2"
+                            "Ref": "PrivateSubnetAz2"
                         },
                         "GroupSet": [
                             {
-                                "Ref": "WideOpenVpcSG"
+                                "Ref": "DefaultSG"
                             }
                         ]
                     }
@@ -1395,17 +1582,21 @@
                             "\n",
                             [
                                 "#!/bin/bash -ex",
-                                "#Install CFN-helper package + Docker",
+                                "echo 'Installing Docker'",
                                 "sudo hostname dtr-replica-02\n",
+                                "export HOSTNAME=dtr-replica-02 \n",
+                                "sudo sed -i 's/localhost/dtr-replica-02/g' /etc/hosts \n",
+                                "echo $HOSTNAME | sudo tee  /etc/hostname \n",
                                 "curl -sSL https://packages.docker.com/1.11/install.sh | sh \n",
                                 "sudo usermod -aG docker ubuntu \n",
+                                "echo 'Install CFN-helper Package' ",
                                 "apt-get -y install python-pip unzip",
                                 "pip install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz",
                                 "cp /usr/local/init/ubuntu/cfn-hup /etc/init.d/cfn-hup",
                                 "chmod +x /etc/init.d/cfn-hup",
                                 "update-rc.d cfn-hup defaults",
                                 "service cfn-hup start",
-                                "#Install AWS CLI",
+                                "echo 'Install AWS CLI'",
                                 "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\"",
                                 "unzip awscli-bundle.zip",
                                 "./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws",
@@ -1437,10 +1628,10 @@
                                             "curl --insecure $UCP_URL/ca > ca.pem\n",
                                             "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
                                             "# Installing UCP Node\n",
-                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.0 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
+                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
                                             "sleep 30 \n",
-                                            "sudo -E docker run --rm -i docker/dtr:2.0.0 join --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-02 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000002 --existing-replica-id 000000000001 \n",
+                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 join --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-02 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000002 --existing-replica-id 000000000001 \n",
                                             "# Wait Handle: DTR tests itself to ensure it's responding before signaling CFN. Try in an infinite loop. Wait Handle will tear down stack if timeout exceeded\n",
                                             "# Defining function:\n",
                                             "checkcontroller()\n",
@@ -1505,7 +1696,7 @@
                     ]
                 },
                 "InstanceType": {
-                    "Ref": "InstanceType"
+                    "Ref": "DTRInstanceType"
                 },
                 "KeyName": {
                     "Ref": "KeyName"
@@ -1520,7 +1711,7 @@
                             "Fn::FindInMap": [
                                 "AWSInstanceType2Arch",
                                 {
-                                    "Ref": "InstanceType"
+                                    "Ref": "DTRInstanceType"
                                 },
                                 "Arch"
                             ]
@@ -1533,11 +1724,11 @@
                         "DeleteOnTermination": "true",
                         "DeviceIndex": "0",
                         "SubnetId": {
-                            "Ref": "PubSubnetAz1"
+                            "Ref": "PrivateSubnetAz1"
                         },
                         "GroupSet": [
                             {
-                                "Ref": "WideOpenVpcSG"
+                                "Ref": "DefaultSG"
                             }
                         ]
                     }
@@ -1548,17 +1739,21 @@
                             "\n",
                             [
                                 "#!/bin/bash -ex",
-                                "#Install CFN-helper package + Docker",
+                                "echo 'Installing Docker' ",
                                 "sudo hostname dtr-replica-03\n",
+                                "export HOSTNAME=dtr-replica-03 \n",
+                                "sudo sed -i 's/localhost/dtr-replica-03/g' /etc/hosts \n",
+                                "echo $HOSTNAME | sudo tee  /etc/hostname \n",
                                 "curl -sSL https://packages.docker.com/1.11/install.sh | sh \n",
                                 "sudo usermod -aG docker ubuntu \n",
+                                "echo 'Install CFN-helper Package' ",
                                 "apt-get -y install python-pip unzip",
                                 "pip install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz",
                                 "cp /usr/local/init/ubuntu/cfn-hup /etc/init.d/cfn-hup",
                                 "chmod +x /etc/init.d/cfn-hup",
                                 "update-rc.d cfn-hup defaults",
                                 "service cfn-hup start",
-                                "#Install AWS CLI",
+                                "echo 'Install AWS CLI'",
                                 "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\"",
                                 "unzip awscli-bundle.zip",
                                 "./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws",
@@ -1590,10 +1785,10 @@
                                             "curl --insecure $UCP_URL/ca > ca.pem\n",
                                             "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
                                             "# Installing UCP Node\n",
-                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.0 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
+                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
                                             "sleep 30 \n",
-                                            "sudo -E docker run --rm -i docker/dtr:2.0.0 join --ucp-url https://$UCPFQDN --ucp-node dtr-replica-03 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000003 --existing-replica-id 000000000001 \n",
+                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 join --ucp-url https://$UCPFQDN --ucp-node dtr-replica-03 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000003 --existing-replica-id 000000000001 \n",
                                             "#Register instance with ELB\n",
                                             "INSTANCE=\"$(curl 169.254.169.254/latest/meta-data/instance-id)\"\n",
                                             "aws elb register-instances-with-load-balancer --load-balancer-name ",
@@ -1646,7 +1841,7 @@
                     }
                 ],
                 "ConnectionSettings": {
-                    "IdleTimeout": 30
+                    "IdleTimeout": 600
                 },
                 "Listeners": [
                     {
@@ -1664,7 +1859,7 @@
                 },
                 "SecurityGroups": [
                     {
-                        "Ref": "WideOpenVpcSG"
+                        "Ref": "DefaultSG"
                     }
                 ]
             }
@@ -1706,6 +1901,21 @@
         }
     },
     "Outputs": {
+        "Username":{
+            "Description": "Default UCP and DTR username",
+            "Value": "admin"
+        },
+        "Password":{
+            "Description": "Default UCP and DTR password. Please Change it!",
+            "Value": "ddconaws"
+        },
+        "S3Bucket":{
+            "Description": "S3 Bucket Name for DDC. S3 Bucket was used to backup Root CA. You may also use this bucket to store DTR images.",
+            "Value" :
+                {
+                    "Ref" : "DDCBucket"
+                }
+        },
         "UCPLoginPage": {
             "Description": "UCP Console URL",
             "Value": {
