@@ -337,7 +337,8 @@
     },
     "Resources": {
       "DDCBucket" : {
-      "Type" : "AWS::S3::Bucket"
+      "Type" : "AWS::S3::Bucket",
+	  "DeletionPolicy" : "Retain"
     },
         "vpc": {
             "Type": "AWS::EC2::VPC",
