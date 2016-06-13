@@ -11,7 +11,6 @@ global:
     - eu-central-1
     - ap-southeast-1
     - ap-southeast-2
-    - ap-northeast-2
   cis3bucket:  s3://quickstart-ci-bucket
  
 tests:
@@ -45,11 +44,6 @@ tests:
     parameter_input: quickstart-docker-ap-northeast1.json
     regions:
     - ap-northeast-1
-  ap-northeast-2:
-    template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-ap-northeast2.json
-    regions:
-    - ap-northeast-2
   ap-southeast-1:
     template_file: quickstart-docker.template
     parameter_input: quickstart-docker-ap-southeast1.json
