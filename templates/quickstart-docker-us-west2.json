@@ -1,0 +1,22 @@
+[
+    {
+        "ParameterKey": "HostedZone",
+        "ParameterValue": "Z2LSP7EWLHSOQQ"
+    },
+    {
+        "ParameterKey": "KeyName",
+        "ParameterValue": "tonynv"
+    },
+    {
+        "ParameterKey": "DTRFQDN",
+        "ParameterValue": "us-west-2-dtr.awsqs.com"
+    },
+    {
+        "ParameterKey": "UCPFQDN",
+        "ParameterValue": "us-west-2-ucp.awsqs.com"
+    },
+    {
+        "ParameterKey": "License",
+        "ParameterValue": "https://s3.amazonaws.com/quickstart-temp-lic/docker/docker_subscription.lic"
+    }
+]
