@@ -20,4 +20,4 @@ tests:
     template_file: quickstart-docker.template
     parameter_input: quickstart-docker-us-east1.json 
     regions:
-    	- us-east-1
+    - us-east-1
