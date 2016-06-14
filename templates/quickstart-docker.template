@@ -1470,6 +1470,7 @@
                         ]
                     }
                 },
+                "IamInstanceProfile": {"Ref": "DTRReplicaProfile"},
                 "Tags": [
                     {
                         "Key": "Name",
@@ -1510,9 +1511,16 @@
                      "Effect": "Allow",
                      "Action": "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
                      "Resource": "*"
-                  } ]
+                  },
+                  {
+                       "Effect": "Allow",
+                       "Action": ["s3:*"],
+                       "Resource": "*"
+                  } 
+                ]
                }
-               } ]
+               } 
+            ]
             }
       },
       "DTRReplicaProfile": {
