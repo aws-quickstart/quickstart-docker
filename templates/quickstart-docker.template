@@ -146,24 +146,42 @@
             "Description": "Docker Datacenter License in JSON format. Get Trial License here : https://hub.docker.com/enterprise/trial/ "
         }
     },
-    "Metadata" : {
-  "AWS::CloudFormation::Interface" : {
-    "ParameterGroups" : [
-      {
-        "Label" : { "default" : "UCP and DTR DNS Configuration" },
-        "Parameters" : [ "HostedZone", "DTRFQDN", "UCPFQDN" ]
-      },
-      {
-        "Label" : { "default": "Cluster Configuration" },
-        "Parameters" : [ "ClusterSize", "UCPControllersInstanceType","DTRInstanceType","UCPNodesInstanceType", "KeyName" ]
-      },
-      {
-        "Label" : { "default": "Docker Datacenter License" },
-        "Parameters" : [ "License" ]
-      }
-    ]
-  }
-},
+    "Metadata": {
+        "AWS::CloudFormation::Interface": {
+            "ParameterGroups": [
+                {
+                    "Label": {
+                        "default": "UCP and DTR DNS Configuration"
+                    },
+                    "Parameters": [
+                        "HostedZone",
+                        "DTRFQDN",
+                        "UCPFQDN"
+                    ]
+                },
+                {
+                    "Label": {
+                        "default": "Cluster Configuration"
+                    },
+                    "Parameters": [
+                        "ClusterSize",
+                        "UCPControllersInstanceType",
+                        "DTRInstanceType",
+                        "UCPNodesInstanceType",
+                        "KeyName"
+                    ]
+                },
+                {
+                    "Label": {
+                        "default": "Docker Datacenter License"
+                    },
+                    "Parameters": [
+                        "License"
+                    ]
+                }
+            ]
+        }
+    },
     "Mappings": {
         "VpcCidrs": {
             "vpc": {
@@ -336,10 +354,10 @@
         }
     },
     "Resources": {
-      "DDCBucket" : {
-      "Type" : "AWS::S3::Bucket",
-	  "DeletionPolicy" : "Retain"
-    },
+        "DDCBucket": {
+            "Type": "AWS::S3::Bucket",
+            "DeletionPolicy": "Retain"
+        },
         "vpc": {
             "Type": "AWS::EC2::VPC",
             "Properties": {
@@ -577,7 +595,6 @@
             }
         },
         "PublicRouteViaIgw": {
-
             "Type": "AWS::EC2::Route",
             "Properties": {
                 "RouteTableId": {
@@ -612,7 +629,6 @@
             }
         },
         "NATAZ1": {
-
             "Type": "AWS::EC2::NatGateway",
             "Properties": {
                 "AllocationId": {
@@ -665,7 +681,6 @@
             }
         },
         "NATAZ2": {
-
             "Type": "AWS::EC2::NatGateway",
             "Properties": {
                 "AllocationId": {
@@ -717,40 +732,47 @@
                 }
             }
         },
-    "DefaultSG": {
+        "DefaultSG": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
                 "VpcId": {
                     "Ref": "vpc"
                 },
                 "GroupDescription": "Default VPC Security Group. Allows only port 443 externally and all traffic from within the Security Group."
+            }
+        },
+        "AllTrafficSecurityGroupIngress": {
+            "Type": "AWS::EC2::SecurityGroupIngress",
+            "Properties": {
+                "GroupId": {
+                    "Ref": "DefaultSG"
+                },
+                "IpProtocol": "-1",
+                "ToPort": "-1",
+                "FromPort": "0",
+                "SourceSecurityGroupId": {
+                    "Ref": "DefaultSG"
                 }
-    },
-
-     "AllTrafficSecurityGroupIngress" : {
-         "Type" : "AWS::EC2::SecurityGroupIngress",
-         "Properties" : {
-             "GroupId" : { "Ref" : "DefaultSG" },
-             "IpProtocol" : "-1",
-             "ToPort" : "-1",
-             "FromPort" : "0",
-             "SourceSecurityGroupId" : { "Ref" : "DefaultSG" }
-         }
-     },
-    "HTTPSSecurityGroupIngress" : {
-         "Type" : "AWS::EC2::SecurityGroupIngress",
-         "Properties" : {
-             "GroupId" : { "Ref" : "DefaultSG" },
-             "IpProtocol" : "tcp",
-             "ToPort" : "443",
-             "FromPort" : "443",
-             "CidrIp": "0.0.0.0/0"
-         }
-     },
-    "ELBAlias": {
+            }
+        },
+        "HTTPSSecurityGroupIngress": {
+            "Type": "AWS::EC2::SecurityGroupIngress",
+            "Properties": {
+                "GroupId": {
+                    "Ref": "DefaultSG"
+                },
+                "IpProtocol": "tcp",
+                "ToPort": "443",
+                "FromPort": "443",
+                "CidrIp": "0.0.0.0/0"
+            }
+        },
+        "ELBAlias": {
             "Type": "AWS::Route53::RecordSetGroup",
             "Properties": {
-                "HostedZoneId": { "Ref": "HostedZone" },
+                "HostedZoneId": {
+                    "Ref": "HostedZone"
+                },
                 "Comment": "Alias targeted Controller ELB.",
                 "RecordSets": [
                     {
@@ -758,11 +780,20 @@
                             "Ref": "UCPFQDN"
                         },
                         "Type": "A",
-                        "AliasTarget" : {
-				"HostedZoneId" : { "Fn::GetAtt" : ["ControllerElasticLoadBalancer", "CanonicalHostedZoneNameID"] },
-      			"DNSName" : { "Fn::GetAtt" : ["ControllerElasticLoadBalancer","DNSName"] }
-				}
-
+                        "AliasTarget": {
+                            "HostedZoneId": {
+                                "Fn::GetAtt": [
+                                    "ControllerElasticLoadBalancer",
+                                    "CanonicalHostedZoneNameID"
+                                ]
+                            },
+                            "DNSName": {
+                                "Fn::GetAtt": [
+                                    "ControllerElasticLoadBalancer",
+                                    "DNSName"
+                                ]
+                            }
+                        }
                     }
                 ]
             }
@@ -770,7 +801,9 @@
         "DTRELBAlias": {
             "Type": "AWS::Route53::RecordSetGroup",
             "Properties": {
-                "HostedZoneId": { "Ref": "HostedZone" },
+                "HostedZoneId": {
+                    "Ref": "HostedZone"
+                },
                 "Comment": "Alias targeted DTR ELB.",
                 "RecordSets": [
                     {
@@ -778,18 +811,28 @@
                             "Ref": "DTRFQDN"
                         },
                         "Type": "A",
-                        "AliasTarget" : {
-                "HostedZoneId" : { "Fn::GetAtt" : ["DTRElasticLoadBalancer", "CanonicalHostedZoneNameID"] },
-                "DNSName" : { "Fn::GetAtt" : ["DTRElasticLoadBalancer","DNSName"] }
-                }
-
+                        "AliasTarget": {
+                            "HostedZoneId": {
+                                "Fn::GetAtt": [
+                                    "DTRElasticLoadBalancer",
+                                    "CanonicalHostedZoneNameID"
+                                ]
+                            },
+                            "DNSName": {
+                                "Fn::GetAtt": [
+                                    "DTRElasticLoadBalancer",
+                                    "DNSName"
+                                ]
+                            }
+                        }
                     }
                 ]
             }
         },
         "WaitHandle01": {
             "Type": "AWS::CloudFormation::WaitConditionHandle",
-            "Properties": {}
+            "Properties": {
+            }
         },
         "WaitCondition01": {
             "Type": "AWS::CloudFormation::WaitCondition",
@@ -803,7 +846,8 @@
         },
         "WaitHandle02": {
             "Type": "AWS::CloudFormation::WaitConditionHandle",
-            "Properties": {}
+            "Properties": {
+            }
         },
         "WaitCondition02": {
             "Type": "AWS::CloudFormation::WaitCondition",
@@ -817,7 +861,8 @@
         },
         "WaitHandle03": {
             "Type": "AWS::CloudFormation::WaitConditionHandle",
-            "Properties": {}
+            "Properties": {
+            }
         },
         "WaitCondition03": {
             "Type": "AWS::CloudFormation::WaitCondition",
@@ -830,40 +875,66 @@
             }
         },
         "ControllerRole": {
-           "Type": "AWS::IAM::Role",
-           "Properties": {
-              "AssumeRolePolicyDocument": {
-                 "Version" : "2012-10-17",
-                 "Statement": [ {
-                    "Effect": "Allow",
-                    "Principal": {
-                       "Service": [ "ec2.amazonaws.com" ]
-                    },
-                    "Action": [ "sts:AssumeRole" ]
-                 } ]
-              },
-              "Path": "/",
-              "Policies": [ {
-                 "PolicyName": "root",
-                 "PolicyDocument": {
-                    "Version" : "2012-10-17",
-                    "Statement": [ {
-                       "Effect": "Allow",
-                       "Action": ["s3:PutObject", "s3:GetObject"],
-                       "Resource": {"Fn::Join": ["", [ "arn:aws:s3:::", {"Ref" : "DDCBucket"}, "/*" ] ] }
-                    } ]
-                 }
-                 } ]
-              }
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "ec2.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "root",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "s3:PutObject",
+                                        "s3:GetObject"
+                                    ],
+                                    "Resource": {
+                                        "Fn::Join": [
+                                            "",
+                                            [
+                                                "arn:aws:s3:::",
+                                                {
+                                                    "Ref": "DDCBucket"
+                                                },
+                                                "/*"
+                                            ]
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
         },
         "ControllerProfile": {
-           "Type": "AWS::IAM::InstanceProfile",
-           "Properties": {
-              "Path": "/",
-              "Roles": [ {
-                 "Ref": "ControllerRole"
-              } ]
-           }
+            "Type": "AWS::IAM::InstanceProfile",
+            "Properties": {
+                "Path": "/",
+                "Roles": [
+                    {
+                        "Ref": "ControllerRole"
+                    }
+                ]
+            }
         },
         "Controller": {
             "DependsOn": "NatAZ1Route",
@@ -949,9 +1020,9 @@
                                             "#!/bin/bash -ex\n",
                                             "export PRIVATE_IP=`curl http://169.254.169.254/latest/meta-data/local-ipv4`\n",
                                             "echo \"Loading License\" \n",
-                                            "INPUT='", 
+                                            "INPUT='",
                                             {
-                                            "Ref": "License" 
+                                                "Ref": "License"
                                             },
                                             "'\n",
                                             "if [[ ${INPUT:0:1} == '{' ]]\n",
@@ -974,13 +1045,17 @@
                                             "sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 backup --root-ca-only --id $ID --passphrase 'ddconaws' > certs.backup.tar \n",
                                             "echo 'Copy cert bundle to S3' \n",
                                             "aws s3 cp certs.backup.tar s3://",
-                                            {"Ref" : "DDCBucket"},
+                                            {
+                                                "Ref": "DDCBucket"
+                                            },
                                             "/cabackup/",
-                                            {"Ref" : "UCPFQDN"},
+                                            {
+                                                "Ref": "UCPFQDN"
+                                            },
                                             ".certs.backup.tar",
                                             " --region ",
                                             {
-                                         "Ref": "AWS::Region"
+                                                "Ref": "AWS::Region"
                                             },
                                             "\n",
                                             "# Wait Handle: Controller tests itself to ensure it's responding before signaling CFN. Try in an infinite loop. Wait Handle will tear down stack if timeout exceeded\n",
@@ -1005,7 +1080,9 @@
                         ]
                     }
                 },
-                "IamInstanceProfile": {"Ref": "ControllerProfile"},
+                "IamInstanceProfile": {
+                    "Ref": "ControllerProfile"
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -1126,7 +1203,6 @@
                 "DesiredCapacity": {
                     "Ref": "ClusterSize"
                 },
-
                 "Tags": [
                     {
                         "Key": "Name",
@@ -1231,9 +1307,11 @@
                 "MinSize": "2",
                 "MaxSize": "2",
                 "DesiredCapacity": "2",
-                "LoadBalancerNames": [{
-                    "Ref": "ControllerElasticLoadBalancer"
-                }],
+                "LoadBalancerNames": [
+                    {
+                        "Ref": "ControllerElasticLoadBalancer"
+                    }
+                ],
                 "Tags": [
                     {
                         "Key": "Name",
@@ -1260,7 +1338,9 @@
                 "InstanceType": {
                     "Ref": "UCPControllersInstanceType"
                 },
-                "IamInstanceProfile": {"Ref": "ControllerProfile"},
+                "IamInstanceProfile": {
+                    "Ref": "ControllerProfile"
+                },
                 "KeyName": {
                     "Ref": "KeyName"
                 },
@@ -1321,23 +1401,25 @@
                                 },
                                 "\n",
                                 "echo 'Downloading Root CA from S3' \n",
-                                "aws s3 cp s3://", {
-                                    "Ref" : "DDCBucket"
+                                "aws s3 cp s3://",
+                                {
+                                    "Ref": "DDCBucket"
                                 },
-                                "/cabackup/", {
-                                    "Ref" : "UCPFQDN"
+                                "/cabackup/",
+                                {
+                                    "Ref": "UCPFQDN"
                                 },
                                 ".certs.backup.tar ",
                                 "certs.backup.tar ",
-                                " --region ", {
-                                "Ref": "AWS::Region"
+                                " --region ",
+                                {
+                                    "Ref": "AWS::Region"
                                 },
                                 "\n",
                                 "echo 'Restoring Root CA' \n",
                                 "export ID=$(sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 id) \n",
                                 "sudo docker run -i --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 restore --id $ID --root-ca-only --passphrase 'ddconaws' < certs.backup.tar \n",
                                 "echo 'Finished Restoring CAs'\n"
-
                             ]
                         ]
                     }
@@ -1416,7 +1498,6 @@
                                 "chmod +x /etc/init.d/cfn-hup",
                                 "update-rc.d cfn-hup defaults",
                                 "service cfn-hup start",
-
                                 {
                                     "Fn::Join": [
                                         "",
@@ -1470,7 +1551,9 @@
                         ]
                     }
                 },
-                "IamInstanceProfile": {"Ref": "DTRReplicaProfile"},
+                "IamInstanceProfile": {
+                    "Ref": "DTRReplicaProfile"
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -1489,50 +1572,61 @@
                 ]
             }
         },
-      "DTRReplicaRole": {
-         "Type": "AWS::IAM::Role",
-         "Properties": {
-            "AssumeRolePolicyDocument": {
-               "Version" : "2012-10-17",
-               "Statement": [ {
-                  "Effect": "Allow",
-                  "Principal": {
-                     "Service": [ "ec2.amazonaws.com" ]
-                  },
-                  "Action": [ "sts:AssumeRole" ]
-               } ]
-            },
-            "Path": "/",
-            "Policies": [ {
-               "PolicyName": "root",
-               "PolicyDocument": {
-                  "Version" : "2012-10-17",
-                  "Statement": [ {
-                     "Effect": "Allow",
-                     "Action": "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
-                     "Resource": "*"
-                  },
-                  {
-                       "Effect": "Allow",
-                       "Action": ["s3:*"],
-                       "Resource": "*"
-                  } 
+        "DTRReplicaRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "ec2.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "root",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
+                                    "Resource": "*"
+                                },
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "s3:*"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    }
                 ]
-               }
-               } 
-            ]
             }
-      },
-      "DTRReplicaProfile": {
-         "Type": "AWS::IAM::InstanceProfile",
-         "Properties": {
-            "Path": "/",
-            "Roles": [ {
-               "Ref": "DTRReplicaRole"
-            } ]
-         }
-      },
-
+        },
+        "DTRReplicaProfile": {
+            "Type": "AWS::IAM::InstanceProfile",
+            "Properties": {
+                "Path": "/",
+                "Roles": [
+                    {
+                        "Ref": "DTRReplicaRole"
+                    }
+                ]
+            }
+        },
         "DTRreplica02": {
             "DependsOn": "WaitCondition02",
             "Type": "AWS::EC2::Instance",
@@ -1609,7 +1703,6 @@
                                 "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\"",
                                 "unzip awscli-bundle.zip",
                                 "./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws",
-
                                 {
                                     "Fn::Join": [
                                         "",
@@ -1659,11 +1752,14 @@
                                             "#Register instance with ELB\n",
                                             "INSTANCE=\"$(curl 169.254.169.254/latest/meta-data/instance-id)\"\n",
                                             "aws elb register-instances-with-load-balancer --load-balancer-name ",
-                                            { "Ref": "DTRElasticLoadBalancer" },
-                                             " --instances $INSTANCE",
-                                             " --region ", {
-                                          "Ref": "AWS::Region"
-                                          }
+                                            {
+                                                "Ref": "DTRElasticLoadBalancer"
+                                            },
+                                            " --instances $INSTANCE",
+                                            " --region ",
+                                            {
+                                                "Ref": "AWS::Region"
+                                            }
                                         ]
                                     ]
                                 }
@@ -1671,7 +1767,9 @@
                         ]
                     }
                 },
-                "IamInstanceProfile": {"Ref": "DTRReplicaProfile"},
+                "IamInstanceProfile": {
+                    "Ref": "DTRReplicaProfile"
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -1766,7 +1864,6 @@
                                 "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\"",
                                 "unzip awscli-bundle.zip",
                                 "./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws",
-
                                 {
                                     "Fn::Join": [
                                         "",
@@ -1801,11 +1898,14 @@
                                             "#Register instance with ELB\n",
                                             "INSTANCE=\"$(curl 169.254.169.254/latest/meta-data/instance-id)\"\n",
                                             "aws elb register-instances-with-load-balancer --load-balancer-name ",
-                                             { "Ref": "DTRElasticLoadBalancer" },
-                                             " --instances $INSTANCE",
-                                             " --region ", {
-                                          "Ref": "AWS::Region"
-                                          }
+                                            {
+                                                "Ref": "DTRElasticLoadBalancer"
+                                            },
+                                            " --instances $INSTANCE",
+                                            " --region ",
+                                            {
+                                                "Ref": "AWS::Region"
+                                            }
                                         ]
                                     ]
                                 }
@@ -1813,7 +1913,9 @@
                         ]
                     }
                 },
-                "IamInstanceProfile": {"Ref": "DTRReplicaProfile"},
+                "IamInstanceProfile": {
+                    "Ref": "DTRReplicaProfile"
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -1910,43 +2012,47 @@
         }
     },
     "Outputs": {
-        "Username":{
+        "Username": {
             "Description": "Default UCP and DTR username",
             "Value": "admin"
         },
-        "Password":{
+        "Password": {
             "Description": "Default UCP and DTR password. Please Change it!",
             "Value": "ddconaws"
         },
-        "S3Bucket":{
+        "S3Bucket": {
             "Description": "S3 Bucket Name for DDC. S3 Bucket was used to backup Root CA. You may also use this bucket to store DTR images.",
-            "Value" :
-                {
-                    "Ref" : "DDCBucket"
-                }
+            "Value": {
+                "Ref": "DDCBucket"
+            }
         },
         "UCPLoginPage": {
             "Description": "UCP Console URL",
             "Value": {
-                "Fn::Join": ["", [ "https://",
-                 {
-                    "Ref" : "UCPFQDN"
-                 }
+                "Fn::Join": [
+                    "",
+                    [
+                        "https://",
+                        {
+                            "Ref": "UCPFQDN"
+                        }
+                    ]
                 ]
-            ]
-          }
+            }
         },
         "DTRLoginPage": {
             "Description": "DTR Console URL",
             "Value": {
-                "Fn::Join": ["", [ "https://",
-                 {
-                    "Ref" : "DTRFQDN"
-                 }
+                "Fn::Join": [
+                    "",
+                    [
+                        "https://",
+                        {
+                            "Ref": "DTRFQDN"
+                        }
+                    ]
                 ]
-            ]
-          }
-
+            }
         }
     }
 }
