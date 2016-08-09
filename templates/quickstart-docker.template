@@ -207,6 +207,21 @@
             "m3.2xlarge": {
                 "Arch": "HVM64"
             },
+            "m4.large": {
+                "Arch": "HVM64"
+            },
+            "m4.xlarge": {
+                "Arch": "HVM64"
+            },
+            "m4.2xlarge": {
+                "Arch": "HVM64"
+            },
+            "m4.4xlarge": {
+                "Arch": "HVM64"
+            },
+            "m4.10xlarge": {
+                "Arch": "HVM64"
+            },
             "c3.large": {
                 "Arch": "HVM64"
             },
@@ -949,9 +964,9 @@
                                             "#!/bin/bash -ex\n",
                                             "export PRIVATE_IP=`curl http://169.254.169.254/latest/meta-data/local-ipv4`\n",
                                             "echo \"Loading License\" \n",
-                                            "INPUT='", 
+                                            "INPUT='",
                                             {
-                                            "Ref": "License" 
+                                            "Ref": "License"
                                             },
                                             "'\n",
                                             "if [[ ${INPUT:0:1} == '{' ]]\n",
@@ -1516,10 +1531,10 @@
                        "Effect": "Allow",
                        "Action": ["s3:*"],
                        "Resource": "*"
-                  } 
+                  }
                 ]
                }
-               } 
+               }
             ]
             }
       },
