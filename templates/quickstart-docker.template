@@ -332,6 +332,10 @@
                 "HVM64": "ami-bb32ddda",
                 "HVMG2": "NOT_SUPPORTED"
             },
+            "ap-south-1": {
+                "HVM64": "ami-c092f8af",
+                "HVMG2": "NOT_SUPPORTED"
+            },
             "ap-southeast-1": {
                 "HVM64": "ami-c4ae7ea7",
                 "HVMG2": "NOT_SUPPORTED"
