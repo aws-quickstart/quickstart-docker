@@ -813,7 +813,7 @@
                 "Handle": {
                     "Ref": "WaitHandle01"
                 },
-                "Timeout": "900"
+                "Timeout": "1800"
             }
         },
         "WaitHandle02": {
@@ -827,7 +827,7 @@
                 "Handle": {
                     "Ref": "WaitHandle02"
                 },
-                "Timeout": "900"
+                "Timeout": "1800"
             }
         },
         "WaitHandle03": {
@@ -841,7 +841,7 @@
                 "Handle": {
                     "Ref": "WaitHandle03"
                 },
-                "Timeout": "900"
+                "Timeout": "1800"
             }
         },
         "ControllerRole": {
