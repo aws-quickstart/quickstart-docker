@@ -978,7 +978,7 @@
                                             "curl -s $INPUT >>/home/ubuntu/docker_subscription.lic \n",
                                             "else echo \"License input must be a valid s3 location or json license key\" \n",
                                             "fi \n",
-                                            "sudo docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /home/ubuntu/docker_subscription.lic:/docker_subscription.lic -e UCP_ADMIN_PASSWORD=ddconaws --name ucp docker/ucp:1.1.1 install --host-address $PRIVATE_IP --san $PRIVATE_IP --san ",
+                                            "sudo docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /home/ubuntu/docker_subscription.lic:/docker_subscription.lic -e UCP_ADMIN_PASSWORD=ddconaws --name ucp docker/ucp:1.1.1 install --debug --host-address $PRIVATE_IP --san $PRIVATE_IP --san ",
                                             {
                                                 "Ref": "UCPFQDN"
                                             },
@@ -1214,7 +1214,7 @@
                                 "\n",
                                 "curl --insecure $UCP_URL/ca > ca.pem\n",
                                 "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
-                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n"
+                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --debug --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n"
                             ]
                         ]
                     }
@@ -1330,7 +1330,7 @@
                                 "\n",
                                 "curl --insecure $UCP_URL/ca > ca.pem\n",
                                 "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
-                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join  --replica  --url $UCP_URL --fingerprint $UCP_FINGERPRINT --san ",
+                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --debug --replica  --url $UCP_URL --fingerprint $UCP_FINGERPRINT --san ",
                                 {
                                     "Ref": "UCPFQDN"
                                 },
@@ -1462,7 +1462,7 @@
                                             "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
                                             "sleep 30 \n",
-                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 install --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-01 --dtr-external-url $DTRFQDN:443 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000001 \n",
+                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 install --debug --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-01 --dtr-external-url $DTRFQDN:443 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000001 \n",
                                             "# Wait Handle: DTR tests itself to ensure it's responding before signaling CFN. Try in an infinite loop. Wait Handle will tear down stack if timeout exceeded\n",
                                             "# Defining function:\n",
                                             "checkcontroller()\n",
@@ -1655,7 +1655,7 @@
                                             "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
                                             "sleep 30 \n",
-                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 join --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-02 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000002 --existing-replica-id 000000000001 \n",
+                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 join --debug --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-02 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000002 --existing-replica-id 000000000001 \n",
                                             "# Wait Handle: DTR tests itself to ensure it's responding before signaling CFN. Try in an infinite loop. Wait Handle will tear down stack if timeout exceeded\n",
                                             "# Defining function:\n",
                                             "checkcontroller()\n",
@@ -1812,7 +1812,7 @@
                                             "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
                                             "sleep 30 \n",
-                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 join --ucp-url https://$UCPFQDN --ucp-node dtr-replica-03 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000003 --existing-replica-id 000000000001 \n",
+                                            "sudo -E docker run --rm -i docker/dtr:2.0.1 join --debug --ucp-url https://$UCPFQDN --ucp-node dtr-replica-03 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000003 --existing-replica-id 000000000001 \n",
                                             "#Register instance with ELB\n",
                                             "INSTANCE=\"$(curl 169.254.169.254/latest/meta-data/instance-id)\"\n",
                                             "aws elb register-instances-with-load-balancer --load-balancer-name ",
