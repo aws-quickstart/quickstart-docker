@@ -8,6 +8,11 @@
             "Default": "id_rsa_aws",
             "ConstraintDescription": "Must be the name of an existing EC2 KeyPair."
         },
+        "RootVolumeSize": {
+            "Type": "String",
+            "Description": "Root filesystem size in GB.",
+            "Default": "120"
+        },
         "HostedZone": {
             "Type": "String",
             "Description": "Enter the Route53 HostedZone ID to use. (e.g. Z2FDTNDATAQYW2)"
@@ -155,7 +160,7 @@
       },
       {
         "Label" : { "default": "Cluster Configuration" },
-        "Parameters" : [ "ClusterSize", "UCPControllersInstanceType","DTRInstanceType","UCPNodesInstanceType", "KeyName" ]
+        "Parameters" : [ "ClusterSize", "RootVolumeSize", "UCPControllersInstanceType","DTRInstanceType","UCPNodesInstanceType", "KeyName" ]
       },
       {
         "Label" : { "default": "Docker Datacenter License" },
@@ -917,6 +922,15 @@
                         ]
                     }
                 ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": { 
+                            "VolumeSize": { "Ref": "RootVolumeSize" },
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
                 "UserData": {
                     "Fn::Base64": {
                         "Fn::Join": [
@@ -1179,6 +1193,15 @@
                         "Ref": "DefaultSG"
                     }
                 ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": { 
+                            "VolumeSize": { "Ref": "RootVolumeSize" },
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
                 "UserData": {
                     "Fn::Base64": {
                         "Fn::Join": [
@@ -1284,6 +1307,15 @@
                 "SecurityGroups": [
                     {
                         "Ref": "DefaultSG"
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": { 
+                            "VolumeSize": { "Ref": "RootVolumeSize" },
+                            "VolumeType": "gp2"
+                        }
                     }
                 ],
                 "UserData": {
@@ -1394,6 +1426,15 @@
                                 "Ref": "DefaultSG"
                             }
                         ]
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": { 
+                            "VolumeSize": { "Ref": "RootVolumeSize" },
+                            "VolumeType": "gp2"
+                        }
                     }
                 ],
                 "UserData": {
@@ -1585,6 +1626,15 @@
                         ]
                     }
                 ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": { 
+                            "VolumeSize": { "Ref": "RootVolumeSize" },
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
                 "UserData": {
                     "Fn::Base64": {
                         "Fn::Join": [
@@ -1740,6 +1790,15 @@
                                 "Ref": "DefaultSG"
                             }
                         ]
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": { 
+                            "VolumeSize": { "Ref": "RootVolumeSize" },
+                            "VolumeType": "gp2"
+                        }
                     }
                 ],
                 "UserData": {
