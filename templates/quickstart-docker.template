@@ -1330,7 +1330,7 @@
                                 "\n",
                                 "curl --insecure $UCP_URL/ca > ca.pem\n",
                                 "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
-                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join  --replica  --url $UCP_URL --fingerprint $UCP_FINGERPRINT --san ",
+                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.1 join --debug --replica  --url $UCP_URL --fingerprint $UCP_FINGERPRINT --san ",
                                 {
                                     "Ref": "UCPFQDN"
                                 },
