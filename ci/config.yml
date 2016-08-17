@@ -58,4 +58,3 @@ tests:
     parameter_input: quickstart-docker-ap-south1.json
     regions:
     - ap-south-1
-quickstart-docker-ap-south1
