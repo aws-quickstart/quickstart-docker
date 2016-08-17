@@ -56,7 +56,7 @@
                 "i2.8xlarge"
             ],
             "ConstraintDescription": "Must be a valid EC2 HVM instance type.",
-            "Default": "m3.medium"
+            "Default": "m4.large"
         },
         "DTRInstanceType": {
             "Type": "String",
@@ -92,7 +92,7 @@
                 "i2.8xlarge"
             ],
             "ConstraintDescription": "Must be a valid EC2 HVM instance type.",
-            "Default": "m3.medium"
+            "Default": "m4.large"
         },
         "UCPNodesInstanceType": {
             "Type": "String",
@@ -132,7 +132,7 @@
                 "i2.8xlarge"
             ],
             "ConstraintDescription": "Must be a valid EC2 HVM instance type.",
-            "Default": "m3.medium"
+            "Default": "m4.large"
         },
         "ClusterSize": {
             "Type": "Number",
