@@ -53,3 +53,9 @@ tests:
     parameter_input: quickstart-docker-ap-southeast2.json
     regions:
     - ap-southeast-2
+  ap-south-1:
+    template_file: quickstart-docker.template
+    parameter_input: quickstart-docker-ap-south1.json
+    regions:
+    - ap-south-1
+quickstart-docker-ap-south1
