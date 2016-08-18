@@ -20,6 +20,18 @@
         "ParameterValue": "ap-south-1-app.awsqs.com"
     },
     {
+        "ParameterKey": "UCPControllersInstanceType",
+        "ParameterValue": "m4.large"
+    },
+    {
+        "ParameterKey": "DTRInstanceType",
+        "ParameterValue": "m4.large"
+    },
+    {
+        "ParameterKey": "UCPNodesInstanceType",
+        "ParameterValue": "m4.large"
+    },
+    {
         "ParameterKey": "License",
         "ParameterValue": "https://s3.amazonaws.com/quickstart-temp-lic/docker/docker_subscription.lic"
     }
