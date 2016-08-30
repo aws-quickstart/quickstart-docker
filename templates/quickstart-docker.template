@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "QS(0025) Docker Datacenter Quickstart for AWS, Version 1.1, August 2016",
+    "Description": "QS(0025) Docker Datacenter Quickstart for AWS, Version 1.2, August 2016",
     "Parameters": {
         "KeyName": {
             "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances",
@@ -1115,15 +1115,15 @@
                                             "curl -s $INPUT >>/home/ubuntu/docker_subscription.lic \n",
                                             "else echo \"License input must be a valid s3 location or json license key\" \n",
                                             "fi \n",
-                                            "sudo docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /home/ubuntu/docker_subscription.lic:/docker_subscription.lic -e UCP_ADMIN_PASSWORD=ddconaws --name ucp docker/ucp:1.1.2 install --debug --host-address $PRIVATE_IP --san $PRIVATE_IP --san ",
+                                            "sudo docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /home/ubuntu/docker_subscription.lic:/docker_subscription.lic -e UCP_ADMIN_PASSWORD=ddconaws --name ucp docker/ucp:1.1.3 install --debug --host-address $PRIVATE_IP --san $PRIVATE_IP --san ",
                                             {
                                                 "Ref": "UCPFQDN"
                                             },
                                             "\n",
                                             "sleep 3 \n",
                                             "echo 'Create Root CA Backup' \n",
-                                            "export ID=$(sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 id) \n",
-                                            "sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 backup --root-ca-only --id $ID --passphrase 'ddconaws' > certs.backup.tar \n",
+                                            "export ID=$(sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 id) \n",
+                                            "sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 backup --root-ca-only --id $ID --passphrase 'ddconaws' > certs.backup.tar \n",
                                             "echo 'Copy cert bundle to S3' \n",
                                             "aws s3 cp certs.backup.tar s3://",
                                             {"Ref" : "DDCBucket"},
@@ -1408,7 +1408,7 @@
                                 "\n",
                                 "curl --insecure $UCP_URL/ca > ca.pem\n",
                                 "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
-                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n"
+                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 join --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n"
                             ]
                         ]
                     }
@@ -1534,7 +1534,7 @@
                                 "\n",
                                 "curl --insecure $UCP_URL/ca > ca.pem\n",
                                 "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
-                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 join  --replica  --url $UCP_URL --fingerprint $UCP_FINGERPRINT --san ",
+                                "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 join  --replica  --url $UCP_URL --fingerprint $UCP_FINGERPRINT --san ",
                                 {
                                     "Ref": "UCPFQDN"
                                 },
@@ -1553,8 +1553,8 @@
                                 },
                                 "\n",
                                 "echo 'Restoring Root CA' \n",
-                                "export ID=$(sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 id) \n",
-                                "sudo docker run -i --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 restore --id $ID --root-ca-only --passphrase 'ddconaws' < certs.backup.tar \n",
+                                "export ID=$(sudo docker run --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 id) \n",
+                                "sudo docker run -i --rm --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 restore --id $ID --root-ca-only --passphrase 'ddconaws' < certs.backup.tar \n",
                                 "echo 'Finished Restoring CAs'\n"
 
                             ]
@@ -1672,7 +1672,7 @@
                                             "curl --insecure $UCP_URL/ca > ca.pem\n",
                                             "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
                                             "# Installing UCP Node\n",
-                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 join --debug --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
+                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 join --debug --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
                                             "sleep 60 \n",
                                             "sudo -E docker run --rm -i docker/dtr:2.0.3 install --debug --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-01 --dtr-external-url $DTRFQDN:443 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000001 \n",
@@ -1874,7 +1874,7 @@
                                             "curl --insecure $UCP_URL/ca > ca.pem\n",
                                             "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
                                             "# Installing UCP Node\n",
-                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 join --debug --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
+                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 join --debug --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
                                             "sleep 60 \n",
                                             "sudo -E docker run --rm -i docker/dtr:2.0.3 join --debug --ucp-url https://$UCPFQDN --ucp-node  dtr-replica-02 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000002 --existing-replica-id 000000000001 \n",
@@ -2040,7 +2040,7 @@
                                             "curl --insecure $UCP_URL/ca > ca.pem\n",
                                             "export UCP_FINGERPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )\n",
                                             "# Installing UCP Node\n",
-                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.2 join --debug --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
+                                            "sudo -E docker run --rm -i --name ucp -e UCP_ADMIN_USER=admin -e UCP_ADMIN_PASSWORD=ddconaws -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:1.1.3 join --debug --url $UCP_URL --fingerprint $UCP_FINGERPRINT \n",
                                             "# Installing DTR Replica\n",
                                             "sleep 60 \n",
                                             "sudo -E docker run --rm -i docker/dtr:2.0.3 join --debug --ucp-url https://$UCPFQDN --ucp-node dtr-replica-03 --ucp-username admin --ucp-password ddconaws --ucp-insecure-tls --replica-id 000000000003 --existing-replica-id 000000000001 \n",
@@ -2171,9 +2171,9 @@
             }
         },
         "Jumphost":{
-            "Description": "Jumphost ssh details to be able to ssh into other DDC nodes",
+            "Description": "Jumphost ssh details to ssh into DDC nodes",
             "Value" : {
-                "Fn::Join": [ "", ["ssh -i <your-private-key.pem> ubuntu@", {"Fn::GetAtt" : [ "Jumphost", "PublicIp"] } ] ]
+                "Fn::Join": [ "", ["ssh -i ",{ "Ref": "KeyName"},".pem ubuntu@",{"Fn::GetAtt" : [ "Jumphost", "PublicIp"] } ] ]
             }
         },
         "S3Bucket":{
