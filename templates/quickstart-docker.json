@@ -1,23 +1,7 @@
 [
     {
-        "ParameterKey": "HostedZone",
-        "ParameterValue": "Z2LSP7EWLHSOQQ"
-    },
-    {
         "ParameterKey": "KeyName",
-        "ParameterValue": "tonynv"
-    },
-    {
-        "ParameterKey": "DTRFQDN",
-        "ParameterValue": "ap-south-1-dtr.awsqs.com"
-    },
-    {
-        "ParameterKey": "UCPFQDN",
-        "ParameterValue": "ap-south-1-ucp.awsqs.com"
-    },
-    {
-        "ParameterKey": "APPFQDN",
-        "ParameterValue": "ap-south-1-app.awsqs.com"
+        "ParameterValue": "cikey"
     },
     {
         "ParameterKey": "UCPControllersInstanceType",
