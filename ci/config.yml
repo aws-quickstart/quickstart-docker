@@ -11,45 +11,7 @@ global:
     - eu-central-1
     - ap-southeast-1
     - ap-southeast-2
- 
 tests:
-  us-east1:
+  docker:
     template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-us-east1.json 
-    regions:
-    - us-east-1
-  us-west-1:
-    template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-us-west1.json 
-    regions:
-    - us-west-1
-  eu-west-1:
-    template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-eu-west1.json 
-    regions:
-    - eu-west-1
-  us-west-2:
-    template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-us-west2.json 
-    regions:
-    - us-west-2
-  eu-central-1:
-    template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-eu-central1.json 
-    regions:
-    - eu-central-1
-  ap-northeast-1:
-    template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-ap-northeast1.json
-    regions:
-    - ap-northeast-1
-  ap-southeast-1:
-    template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-ap-southeast1.json
-    regions:
-    - ap-southeast-1
-  ap-southeast-2:
-    template_file: quickstart-docker.template
-    parameter_input: quickstart-docker-ap-southeast2.json
-    regions:
-    - ap-southeast-2
+    parameter_input: quickstart-docker.json 

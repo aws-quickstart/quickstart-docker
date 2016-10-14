@@ -16,6 +16,10 @@
         "ParameterValue": "eu-west-1-ucp.awsqs.com"
     },
     {
+        "ParameterKey": "APPFQDN",
+        "ParameterValue": "eu-west-1-app.awsqs.com"
+    },
+    {
         "ParameterKey": "License",
         "ParameterValue": "https://s3.amazonaws.com/quickstart-temp-lic/docker/docker_subscription.lic"
     }
