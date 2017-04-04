@@ -16,7 +16,7 @@
             ]
         }
     },
-    "Description": "Docker Datacenter for AWS (17.03.0-ee-1)",
+    "Description": "QS(0025) Docker Datacenter for AWS (17.03.0-ee-1)",
     "Mappings": {
         "AWSInstanceType2Arch": {
             "c3.2xlarge": {
