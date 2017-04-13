@@ -1,0 +1,54 @@
+[
+    {
+        "ParameterKey": "ClusterSize",
+        "ParameterValue": "5"
+    },
+    {
+        "ParameterKey": "DDCPasswordSet",
+        "ParameterValue": "$[taskcat_genpass_8]"
+    },
+    {
+        "ParameterKey": "DDCUsernameSet",
+        "ParameterValue": "admin"
+    },
+    {
+        "ParameterKey": "EnableSystemPrune",
+        "ParameterValue": "no"
+    },
+    {
+        "ParameterKey": "InstanceType",
+        "ParameterValue": "t2.micro"
+    },
+    {
+        "ParameterKey": "KeyName",
+        "ParameterValue": "tonynv"
+    },
+    {
+        "ParameterKey": "License",
+        "ParameterValue": "$[taskcat_url_https://s3.amazonaws.com/quickstart-temp-lic/docker/docker_subscription.lic]"
+    },
+    {
+        "ParameterKey": "ManagerDiskSize",
+        "ParameterValue": "20"
+    },
+    {
+        "ParameterKey": "ManagerDiskType",
+        "ParameterValue": "standard"
+    },
+    {
+        "ParameterKey": "ManagerInstanceType",
+        "ParameterValue": "m4.large"
+    },
+    {
+        "ParameterKey": "ManagerSize",
+        "ParameterValue": "3"
+    },
+    {
+        "ParameterKey": "WorkerDiskSize",
+        "ParameterValue": "20"
+    },
+    {
+        "ParameterKey": "WorkerDiskType",
+        "ParameterValue": "standard"
+    }
+]

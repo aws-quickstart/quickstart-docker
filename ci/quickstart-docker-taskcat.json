@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "DDCPasswordSet",
+        "ParameterValue": "$[taskcat_genpass_8]"
+    },
+    {
+        "ParameterKey": "InstanceType",
+        "ParameterValue": "t2.medium"
+    },
+    {
+        "ParameterKey": "KeyName",
+        "ParameterValue": "tonynv"
+    },
+    {
+        "ParameterKey": "License",
+        "ParameterValue": "$[taskcat_url_https://s3.amazonaws.com/quickstart-temp-lic/docker/docker_subscription.lic]"
+    }
+]
