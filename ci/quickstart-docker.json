@@ -17,7 +17,7 @@
     },
     {
         "ParameterKey": "InstanceType",
-        "ParameterValue": "t2.micro"
+        "ParameterValue": "m4.large"
     },
     {
         "ParameterKey": "KeyName",
