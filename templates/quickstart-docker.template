@@ -16,7 +16,7 @@
             ]
         }
     },
-    "Description": "QS(0025) Docker Datacenter for AWS (17.03.0-ee-1)",
+    "Description": "QS(0025) Docker Datacenter for AWS (17.03.1-ee-3) June,13,2017",
     "Mappings": {
         "AWSInstanceType2Arch": {
             "c3.2xlarge": {
@@ -249,68 +249,68 @@
                 "NumAZs": "3"
             }
         },
-        "AWSRegionArch2AMI": {
+	"AWSRegionArch2AMI": {
             "ap-northeast-1": {
-                "HVM64": "ami-e3e4ae84",
+                "HVM64": "ami-12675e75",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "ap-northeast-2": {
-                "HVM64": "ami-7a35e514",
+                "HVM64": "ami-dd5588b3",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "ap-south-1": {
-                "HVM64": "ami-4e106021",
+                "HVM64": "ami-339ae75c",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "ap-southeast-1": {
-                "HVM64": "ami-7b398818",
+                "HVM64": "ami-f1961192",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "ap-southeast-2": {
-                "HVM64": "ami-3a181b59",
+                "HVM64": "ami-eb273288",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "ca-central-1": {
-                "HVM64": "ami-d074c9b4",
+                "HVM64": "ami-6f66da0b",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "eu-central-1": {
-                "HVM64": "ami-a8a570c7",
+                "HVM64": "ami-ee67be81",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "eu-west-1": {
-                "HVM64": "ami-432c0325",
+                "HVM64": "ami-6d8e850b",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "eu-west-2": {
-                "HVM64": "ami-71dbce15",
+                "HVM64": "ami-686e790c",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "sa-east-1": {
-                "HVM64": "ami-735b3d1f",
+                "HVM64": "ami-650f6109",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "us-east-1": {
-                "HVM64": "ami-5aa67a4c",
+                "HVM64": "ami-149fe702",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "us-east-2": {
-                "HVM64": "ami-bdb297d8",
+                "HVM64": "ami-4fbd9a2a",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "us-west-1": {
-                "HVM64": "ami-467d2326",
+                "HVM64": "ami-c6c6e7a6",
                 "HVMG2": "NOT_SUPPORTED"
             },
             "us-west-2": {
-                "HVM64": "ami-997af9f9",
+                "HVM64": "ami-28402648",
                 "HVMG2": "NOT_SUPPORTED"
             }
         },
         "DockerForAWS": {
             "version": {
-                "docker": "17.03.0-ee-1",
-                "forAws": "aws-v1.13.0-rc3-beta13"
+                "docker": "17.03.1-ee-3",
+                "forAws": "17.03.1-ee-3-aws2"
             }
         },
         "VpcCidrs": {
@@ -545,12 +545,6 @@
         },
         "InstanceType": {
             "AllowedValues": [
-                "t2.micro",
-                "t2.small",
-                "t2.medium",
-                "t2.large",
-                "t2.xlarge",
-                "t2.2xlarge",
                 "m4.large",
                 "m4.xlarge",
                 "m4.2xlarge",
@@ -577,8 +571,8 @@
                 "i2.8xlarge"
             ],
             "ConstraintDescription": "Must be a valid EC2 HVM instance type.",
-            "Default": "t2.micro",
-            "Description": "EC2 HVM instance type (t2.micro, m4.large, etc). Ensure instance type selected is supported in current region",
+            "Default": "m4.large",
+            "Description": "EC2 HVM instance type (m4.large, m4.xlarge,etc). Ensure instance type selected is supported in current region",
             "Type": "String"
         },
         "KeyName": {
@@ -1244,7 +1238,7 @@
                                 },
                                 "' ",
                                 "-v /var/run/docker.sock:/var/run/docker.sock ",
-                                "docker4x/meta-aws:$DOCKER_FOR_IAAS_VERSION metaserver -flavor=aws\n",
+                                "docker4x/meta-aws:$DOCKER_FOR_IAAS_VERSION metaserver -iaas_provider=aws\n",
                                 "docker run --log-driver=json-file --restart=no -d ",
                                 "-e DYNAMODB_TABLE='",
                                 {
@@ -1445,7 +1439,7 @@
                                 "-v /var/run/docker.sock:/var/run/docker.sock ",
                                 "-v /usr/bin/docker:/usr/bin/docker ",
                                 "-v /tmp/docker:/tmp/docker ",
-"-e UCP_TAG=2.1.1 ","-e DTR_TAG=2.2.3 ","docker/ucp-init-aws:2.1.0",
+"-e UCP_TAG=2.1.4 ","-e DTR_TAG=2.2.4 ","docker/ucp-init-aws:2.1.0",
                                 "\n"
                             ]
                         ]
@@ -1879,7 +1873,7 @@
                                 "' ",
                                 "-v /var/run/docker.sock:/var/run/docker.sock ",
                                 "-v /usr/bin/docker:/usr/bin/docker ",
-"-e UCP_TAG=2.1.1 ","-e DTR_TAG=2.2.3 ","docker/ucp-init-aws:2.1.0",
+"-e UCP_TAG=2.1.4 ","-e DTR_TAG=2.2.4 ","docker/ucp-init-aws:2.1.0",
                                 "\n"
                             ]
                         ]
