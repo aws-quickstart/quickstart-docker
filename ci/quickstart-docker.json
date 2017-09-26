@@ -1,5 +1,4 @@
-[
-    {
+[{
         "ParameterKey": "ClusterSize",
         "ParameterValue": "5"
     },
@@ -50,5 +49,21 @@
     {
         "ParameterKey": "WorkerDiskType",
         "ParameterValue": "standard"
+    },
+    {
+        "ParameterKey": "NoProxy",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "RemoteSSH",
+        "ParameterValue": "54.240.198.34/32"
+    },
+    {
+        "ParameterKey": "HTTPProxy",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "HTTPSProxy",
+        "ParameterValue": ""
     }
 ]
