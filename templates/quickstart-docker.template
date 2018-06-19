@@ -523,7 +523,7 @@
             ],
             "ParameterLabels": {
                 "ClusterSize": {
-                    "default": "Number of Swarm worker nodes?"
+                    "default": "Number of Swarm worker nodes"
                 },
                 "DDCPasswordSet": {
                     "default": "Enter your Docker Datacenter password"
@@ -532,49 +532,49 @@
                     "default": "Enter the Username you want to use with Docker Datacenter"
                 },
                 "EnableCloudStorEfs": {
-                    "default": "Create EFS prerequsities for CloudStor?"
+                    "default": "Create EFS prerequsities for CloudStor"
                 },
                 "EnableCloudWatchLogs": {
-                    "default": "Use Cloudwatch for container logging?"
+                    "default": "Use CloudWatch for container logging"
                 },
                 "EnableSystemPrune": {
-                    "default": "Enable daily resource cleanup?"
+                    "default": "Enable daily resource cleanup"
                 },
                 "HTTPProxy": {
-                    "default": "Value for HTTP_PROXY environment variable."
+                    "default": "Value for HTTP_PROXY environment variable"
                 },
                 "HTTPSProxy": {
-                    "default": "Value for HTTPS_PROXY environment variable."
+                    "default": "Value for HTTPS_PROXY environment variable"
                 },
                 "InstanceType": {
-                    "default": "Agent worker instance type?"
+                    "default": "Agent worker instance type"
                 },
                 "KeyName": {
-                    "default": "Which SSH key to use?"
+                    "default": "Which SSH key to use"
                 },
                 "License": {
                     "default": "Enter your Docker Datacenter License"
                 },
                 "ManagerDiskSize": {
-                    "default": "Manager ephemeral storage volume size?"
+                    "default": "Manager ephemeral storage volume size"
                 },
                 "ManagerDiskType": {
                     "default": "Manager ephemeral storage volume type"
                 },
                 "ManagerInstanceType": {
-                    "default": "Swarm manager instance type?"
+                    "default": "Swarm manager instance type"
                 },
                 "ManagerSize": {
-                    "default": "Number of Swarm managers?"
+                    "default": "Number of Swarm managers"
                 },
                 "NoProxy": {
-                    "default": "Value for NO_PROXY environment variable."
+                    "default": "Value for NO_PROXY environment variable"
                 },
                 "RemoteSSH": {
-                    "default": "Which IPs are allowed to SSH? [0.0.0.0/0 will allow SSH from anywhere]"
+                    "default": "Which IPs are allowed to SSH"
                 },
                 "WorkerDiskSize": {
-                    "default": "Worker ephemeral storage volume size?"
+                    "default": "Worker ephemeral storage volume size"
                 },
                 "WorkerDiskType": {
                     "default": "Worker ephemeral storage volume type"
@@ -907,7 +907,7 @@
         },
         "RemoteSSH": {
             "ConstraintDescription": "Must be a valid IP CIDR range of the form x.x.x.x/x.",
-            "Description": "The IP address range that can SSH to the EC2 instance.",
+            "Description": "The value 0.0.0.0/0 will allow SSH from anywhere",
             "MaxLength": "18",
             "MinLength": "9",
             "Type": "String"
