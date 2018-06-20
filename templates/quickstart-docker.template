@@ -1,5 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "QS(0025) Docker EE DDC for AWS 17.06.2-ee-6-aws2",
     "Conditions": {
         "CloudStorEfsSelected": {
             "Fn::Equals": [
@@ -70,7 +71,6 @@
             ]
         }
     },
-    "Description": "QS(0025) Docker EE DDC for AWS 17.06.2-ee-6-aws2",
     "Mappings": {
         "AWSInstanceType2Arch": {
             "c3.2xlarge": {
@@ -512,7 +512,7 @@
                 },
                 {
                     "Label": {
-                        "default": "DDC Properties"
+                        "default": "Docker EE Properties"
                     },
                     "Parameters": [
                         "DDCUsernameSet",
@@ -532,7 +532,7 @@
                     "default": "Enter the Username you want to use with Docker Datacenter"
                 },
                 "EnableCloudStorEfs": {
-                    "default": "Create EFS prerequsities for CloudStor"
+                    "default": "Create EFS prerequisites for CloudStor"
                 },
                 "EnableCloudWatchLogs": {
                     "default": "Use CloudWatch for container logging"
@@ -584,13 +584,13 @@
     },
     "Outputs": {
         "DDCUsername": {
-            "Description": "Docker Datacenter Username",
+            "Description": "Docker Datacenter Username.",
             "Value": {
                 "Ref": "DDCUsernameSet"
             }
         },
         "DTRLoginURL": {
-            "Description": "Docker Datacenter DTR Login URL",
+            "Description": "Docker Datacenter DTR Login URL.",
             "Value": {
                 "Fn::Join": [
                     "",
@@ -607,7 +607,7 @@
             }
         },
         "DefaultDNSTarget": {
-            "Description": "Use this name to update your DNS records",
+            "Description": "Use this name to update your DNS records.",
             "Value": {
                 "Fn::GetAtt": [
                     "ExternalLoadBalancer",
@@ -616,7 +616,7 @@
             }
         },
         "ELBDNSZoneID": {
-            "Description": "Use this zone ID to update your DNS records",
+            "Description": "Use this zone ID to update your DNS records.",
             "Value": {
                 "Fn::GetAtt": [
                     "ExternalLoadBalancer",
@@ -625,13 +625,13 @@
             }
         },
         "ManagerSecurityGroupID": {
-            "Description": "SecurityGroup ID of ManagerVpcSG",
+            "Description": "SecurityGroup ID of ManagerVpcSG.",
             "Value": {
                 "Ref": "ManagerVpcSG"
             }
         },
         "Managers": {
-            "Description": "You can see the manager nodes associated with this cluster here. Follow the instructions here: https://docs.docker.com/docker-for-aws/deploy/",
+            "Description": "You can see the manager nodes associated with this cluster here. Follow the instructions here: https://docs.docker.com/docker-for-aws/deploy/ .",
             "Value": {
                 "Fn::Join": [
                     "",
@@ -654,19 +654,19 @@
             }
         },
         "NodeSecurityGroupID": {
-            "Description": "SecurityGroup ID of NodeVpcSG",
+            "Description": "SecurityGroup ID of NodeVpcSG.",
             "Value": {
                 "Ref": "NodeVpcSG"
             }
         },
         "SwarmWideSecurityGroupID": {
-            "Description": "SecurityGroup ID of SwarmWideSG",
+            "Description": "SecurityGroup ID of SwarmWideSG.",
             "Value": {
                 "Ref": "SwarmWideSG"
             }
         },
         "UCPLoginURL": {
-            "Description": "Docker Datacenter UCP Login URL",
+            "Description": "Docker Datacenter UCP Login URL.",
             "Value": {
                 "Fn::Join": [
                     "",
@@ -683,13 +683,13 @@
             }
         },
         "VPCID": {
-            "Description": "Use this as the VPC for configuring Private Hosted Zones",
+            "Description": "Use this as the VPC for configuring Private Hosted Zones.",
             "Value": {
                 "Ref": "Vpc"
             }
         },
         "ZoneAvailabilityComment": {
-            "Description": "Availabilty Zones Comment",
+            "Description": "Availabilty Zones Comment.",
             "Value": {
                 "Fn::If": [
                     "HasOnly2AZs",
@@ -709,16 +709,16 @@
         },
         "DDCPasswordSet": {
             "ConstraintDescription": "must be at least 8 characters",
-            "Description": "Docker Datacenter Password?",
+            "Description": "Docker Datacenter Password.",
             "MaxLength": "40",
             "MinLength": "8",
             "NoEcho": true,
             "Type": "String"
         },
         "DDCUsernameSet": {
-            "ConstraintDescription": "Please enter the username you want to use for Docker Datacenter",
+            "ConstraintDescription": "Please enter the username you want to use for Docker Datacenter.",
             "Default": "admin",
-            "Description": "Docker Datacenter Username?",
+            "Description": "Docker Datacenter Username.",
             "Type": "String"
         },
         "EnableCloudStorEfs": {
@@ -727,7 +727,7 @@
                 "yes"
             ],
             "Default": "no",
-            "Description": "Create CloudStor EFS mount targets",
+            "Description": "Create CloudStor EFS mount targets.",
             "Type": "String"
         },
         "EnableCloudWatchLogs": {
@@ -736,7 +736,7 @@
                 "yes"
             ],
             "Default": "no",
-            "Description": "Send all Container logs to CloudWatch",
+            "Description": "Send all Container logs to CloudWatch.",
             "Type": "String"
         },
         "EnableSystemPrune": {
@@ -745,18 +745,18 @@
                 "yes"
             ],
             "Default": "no",
-            "Description": "Cleans up unused images, containers, networks and volumes",
+            "Description": "Cleans up unused images, containers, networks and volumes.",
             "Type": "String"
         },
         "HTTPProxy": {
             "AllowedPattern": "^\\S*$",
-            "ConstraintDescription": "HTTP_PROXY environment variable setting",
+            "ConstraintDescription": "HTTP_PROXY environment variable setting.",
             "Description": "Value for HTTP_PROXY environment variable.",
             "Type": "String"
         },
         "HTTPSProxy": {
             "AllowedPattern": "^\\S*$",
-            "ConstraintDescription": "HTTPS_PROXY environment variable setting",
+            "ConstraintDescription": "HTTPS_PROXY environment variable setting.",
             "Description": "Value for HTTPS_PROXY environment variable.",
             "Type": "String"
         },
@@ -820,18 +820,18 @@
             "Type": "String"
         },
         "KeyName": {
-            "ConstraintDescription": "Must be the name of an existing EC2 KeyPair",
-            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances",
+            "ConstraintDescription": "Must be the name of an existing EC2 KeyPair.",
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances.",
             "Type": "AWS::EC2::KeyPair::KeyName"
         },
         "License": {
-            "Description": "Docker Datacenter License in JSON format or URL to download it. Get Trial License here https://store.docker.com/editions/enterprise/docker-ee-trial",
+            "Description": "Docker Datacenter License in JSON format or URL to download it. Get Trial License here https://store.docker.com/bundles/docker-datacenter.",
             "NoEcho": true,
             "Type": "String"
         },
         "ManagerDiskSize": {
             "Default": "20",
-            "Description": "Size of Manager's ephemeral storage volume in GiB",
+            "Description": "Size of Manager's ephemeral storage volume in GiB.",
             "MaxValue": "1024",
             "MinValue": "20",
             "Type": "Number"
@@ -842,7 +842,7 @@
                 "gp2"
             ],
             "Default": "gp2",
-            "Description": "Manager ephemeral storage volume type",
+            "Description": "Manager ephemeral storage volume type.",
             "Type": "String"
         },
         "ManagerInstanceType": {
@@ -896,25 +896,25 @@
                 "5"
             ],
             "Default": "3",
-            "Description": "Number of Swarm manager nodes (3, 5)",
+            "Description": "Number of Swarm manager nodes (3, 5).",
             "Type": "Number"
         },
         "NoProxy": {
             "AllowedPattern": "^\\S*$",
-            "ConstraintDescription": "NO_PROXY environment variable setting",
+            "ConstraintDescription": "NO_PROXY environment variable setting.",
             "Description": "Value for NO_PROXY environment variable.",
             "Type": "String"
         },
         "RemoteSSH": {
             "ConstraintDescription": "Must be a valid IP CIDR range of the form x.x.x.x/x.",
-            "Description": "The value 0.0.0.0/0 will allow SSH from anywhere",
+            "Description": "The value 0.0.0.0/0 will allow SSH from anywhere.",
             "MaxLength": "18",
             "MinLength": "9",
             "Type": "String"
         },
         "WorkerDiskSize": {
             "Default": "20",
-            "Description": "Size of Workers's ephemeral storage volume in GiB",
+            "Description": "Size of Workers's ephemeral storage volume in GiB.",
             "MaxValue": "1024",
             "MinValue": "20",
             "Type": "Number"
@@ -925,7 +925,7 @@
                 "gp2"
             ],
             "Default": "standard",
-            "Description": "Worker ephemeral storage volume type",
+            "Description": "Worker ephemeral storage volume type.",
             "Type": "String"
         }
     },
@@ -1127,7 +1127,7 @@
         "DTRLoadBalancerSG": {
             "DependsOn": "Vpc",
             "Properties": {
-                "GroupDescription": "DTR Load Balancer SecurityGroup",
+                "GroupDescription": "DTR Load Balancer SecurityGroup.",
                 "SecurityGroupIngress": [
                     {
                         "CidrIp": "0.0.0.0/0",
@@ -1333,7 +1333,7 @@
         "ExternalLoadBalancerSG": {
             "DependsOn": "Vpc",
             "Properties": {
-                "GroupDescription": "External Load Balancer SecurityGroup",
+                "GroupDescription": "External Load Balancer SecurityGroup.",
                 "SecurityGroupIngress": [
                     {
                         "CidrIp": "0.0.0.0/0",
@@ -1976,7 +1976,7 @@
         "ManagerVpcSG": {
             "DependsOn": "NodeVpcSG",
             "Properties": {
-                "GroupDescription": "Manager SecurityGroup",
+                "GroupDescription": "Manager SecurityGroup.",
                 "SecurityGroupIngress": [
                     {
                         "CidrIp": {
@@ -2665,7 +2665,7 @@
         "NodeVpcSG": {
             "DependsOn": "Vpc",
             "Properties": {
-                "GroupDescription": "Node SecurityGroup",
+                "GroupDescription": "Node SecurityGroup.",
                 "SecurityGroupEgress": [
                     {
                         "CidrIp": "0.0.0.0/0",
@@ -3350,7 +3350,7 @@
         "SwarmWideSG": {
             "DependsOn": "Vpc",
             "Properties": {
-                "GroupDescription": "Swarm wide access",
+                "GroupDescription": "Swarm wide access.",
                 "SecurityGroupIngress": [
                     {
                         "CidrIp": {
@@ -3471,7 +3471,7 @@
         "UCPLoadBalancerSG": {
             "DependsOn": "Vpc",
             "Properties": {
-                "GroupDescription": "UCP Load Balancer SecurityGroup",
+                "GroupDescription": "UCP Load Balancer SecurityGroup.",
                 "SecurityGroupIngress": [
                     {
                         "CidrIp": "0.0.0.0/0",
