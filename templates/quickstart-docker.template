@@ -825,7 +825,7 @@
             "Type": "AWS::EC2::KeyPair::KeyName"
         },
         "License": {
-            "Description": "Docker Datacenter License in JSON format or URL to download it. Get Trial License here https://store.docker.com/bundles/docker-datacenter",
+            "Description": "Docker Datacenter License in JSON format or URL to download it. Get Trial License here https://store.docker.com/editions/enterprise/docker-ee-trial",
             "NoEcho": true,
             "Type": "String"
         },
