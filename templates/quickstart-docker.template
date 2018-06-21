@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "QS(0025) Docker EE DDC for AWS 17.06.2-ee-6-aws2",
+    "Description": "QS(0025) Docker EE for AWS 17.06.2-ee-6-aws2",
     "Conditions": {
         "CloudStorEfsSelected": {
             "Fn::Equals": [
@@ -526,10 +526,10 @@
                     "default": "Number of Swarm worker nodes"
                 },
                 "DDCPasswordSet": {
-                    "default": "Enter your Docker Datacenter password"
+                    "default": "Enter your Docker EE password"
                 },
                 "DDCUsernameSet": {
-                    "default": "Enter the Username you want to use with Docker Datacenter"
+                    "default": "Enter the Username you want to use with Docker EE"
                 },
                 "EnableCloudStorEfs": {
                     "default": "Create EFS prerequisites for CloudStor"
@@ -553,7 +553,7 @@
                     "default": "Which SSH key to use"
                 },
                 "License": {
-                    "default": "Enter your Docker Datacenter License"
+                    "default": "Enter your Docker EE License"
                 },
                 "ManagerDiskSize": {
                     "default": "Manager ephemeral storage volume size"
@@ -584,13 +584,13 @@
     },
     "Outputs": {
         "DDCUsername": {
-            "Description": "Docker Datacenter Username.",
+            "Description": "Docker EE Username.",
             "Value": {
                 "Ref": "DDCUsernameSet"
             }
         },
         "DTRLoginURL": {
-            "Description": "Docker Datacenter DTR Login URL.",
+            "Description": "Docker EE DTR Login URL.",
             "Value": {
                 "Fn::Join": [
                     "",
@@ -666,7 +666,7 @@
             }
         },
         "UCPLoginURL": {
-            "Description": "Docker Datacenter UCP Login URL.",
+            "Description": "Docker EE UCP Login URL.",
             "Value": {
                 "Fn::Join": [
                     "",
@@ -709,16 +709,16 @@
         },
         "DDCPasswordSet": {
             "ConstraintDescription": "must be at least 8 characters",
-            "Description": "Docker Datacenter Password.",
+            "Description": "Docker EE Password.",
             "MaxLength": "40",
             "MinLength": "8",
             "NoEcho": true,
             "Type": "String"
         },
         "DDCUsernameSet": {
-            "ConstraintDescription": "Please enter the username you want to use for Docker Datacenter.",
+            "ConstraintDescription": "Please enter the username you want to use for Docker EE.",
             "Default": "admin",
-            "Description": "Docker Datacenter Username.",
+            "Description": "Docker EE Username.",
             "Type": "String"
         },
         "EnableCloudStorEfs": {
@@ -825,7 +825,7 @@
             "Type": "AWS::EC2::KeyPair::KeyName"
         },
         "License": {
-            "Description": "Docker Datacenter License in JSON format or URL to download it. Get Trial License here https://store.docker.com/editions/enterprise/docker-ee-trial.",
+            "Description": "Docker EE License in JSON format or URL to download it. Get Trial License here https://store.docker.com/editions/enterprise/docker-ee-trial.",
             "NoEcho": true,
             "Type": "String"
         },
