@@ -1,5 +1,5 @@
 ## Docker Enterprise Edition on AWS
-This Quick Start to automatically set up the following Docker EE environment on AWS:
+This Quick Start to automatically set up the following Docker Enterprise Edition (EE) environment on AWS:
 * A virtual private cloud (VPC) that spans three Availability Zones and includes three public subnets.
 * Three Swarm controller nodes that run the DTR and UCP services.
 * A cluster of Swarm nodes in an Auto Scaling group, so the cluster can grow dynamically as the load on the instances increases.
@@ -8,3 +8,5 @@ This Quick Start to automatically set up the following Docker EE environment on 
 
 ### Architecture
 ![quickstart-doocker](/images/docker.png)
+
+For architectural details, best practices, step-by-step instructions, and customization options, see the [deployment guide](https://fwd.aws/98RWP).
