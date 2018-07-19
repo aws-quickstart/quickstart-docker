@@ -65,5 +65,9 @@
     {
         "ParameterKey": "HTTPSProxy",
         "ParameterValue": ""
+    },
+    {
+        "ParameterKey":"QSS3BucketName",
+        "ParameterValue":"$[taskcat_autobucket]"
     }
 ]
