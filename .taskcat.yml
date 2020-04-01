@@ -1,0 +1,57 @@
+project:
+  name: quickstart-docker
+  owner: quickstart-eng@amazon.com
+  package_lambda: false
+  regions:
+  - ap-northeast-1
+  - ap-northeast-2
+  - ap-south-1
+  - ap-southeast-1
+  - ap-southeast-2
+  - ca-central-1
+  - eu-central-1
+  - eu-west-1
+  - eu-west-2
+  - sa-east-1
+  - us-east-1
+  - us-east-2
+  - us-west-1
+  - us-west-2
+  s3_bucket: ''
+tests:
+  docker:
+    parameters:
+      ClusterSize: '5'
+      DDCPasswordSet: $[taskcat_genpass_8]
+      DDCUsernameSet: admin
+      EnableSystemPrune: 'no'
+      HTTPProxy: ''
+      HTTPSProxy: ''
+      InstanceType: m4.large
+      KeyName: taskcat-test
+      License: $[taskcat_url_https://s3.amazonaws.com/quickstart-temp-lic/docker/docker_subscription.lic]
+      ManagerDiskSize: '20'
+      ManagerDiskType: standard
+      ManagerInstanceType: m4.large
+      ManagerSize: '3'
+      NoProxy: ''
+      RemoteSSH: 0.0.0.0/0
+      WorkerDiskSize: '20'
+      WorkerDiskType: standard
+    regions:
+    - ap-northeast-1
+    - ap-northeast-2
+    - ap-south-1
+    - ap-southeast-1
+    - ap-southeast-2
+    - ca-central-1
+    - eu-central-1
+    - eu-west-1
+    - eu-west-2
+    - sa-east-1
+    - us-east-1
+    - us-east-2
+    - us-west-1
+    - us-west-2
+    s3_bucket: ''
+    template: templates/quickstart-docker.template.yaml

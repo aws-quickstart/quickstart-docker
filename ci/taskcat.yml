@@ -20,5 +20,5 @@ global:
     - us-west-2
 tests:
   docker:
-    template_file: quickstart-docker.template
+    template_file: quickstart-docker.template.yaml
     parameter_input: quickstart-docker.json 
