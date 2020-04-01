@@ -28,7 +28,7 @@ tests:
       HTTPProxy: ''
       HTTPSProxy: ''
       InstanceType: m4.large
-      KeyName: taskcat-test
+      KeyName: $[taskcat_getkeypair]
       License: $[taskcat_url_https://s3.amazonaws.com/quickstart-temp-lic/docker/docker_subscription.lic]
       ManagerDiskSize: '20'
       ManagerDiskType: standard
