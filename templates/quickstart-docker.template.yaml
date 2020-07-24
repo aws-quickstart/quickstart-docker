@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: QS(0025) Docker EE for AWS 17.06.2-ee-6-aws2
+Description: Docker EE for AWS 17.06.2-ee-6-aws2 (qs-1qup6ra7m)
 Conditions:
   CloudStorEfsSelected: !Equals
     - !Ref 'EnableCloudStorEfs'
