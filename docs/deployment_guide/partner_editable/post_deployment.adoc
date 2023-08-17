@@ -1,0 +1,5 @@
+// Include any postdeployment steps here, such as steps necessary to test that the deployment was successful. If there are no postdeployment steps, leave this file empty.
+
+== Postdeployment steps
+
+Both UCP and DTR are installed with self-signed certificates. If you want to use your own certificates, follow the instructions in the https://docs.docker.com/datacenter/dtr/2.0/configure/configuration/[Docker Trusted Registry documentation].

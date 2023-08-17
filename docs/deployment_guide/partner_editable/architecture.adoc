@@ -1,0 +1,24 @@
+:xrefstyle: short
+
+Deploying this Partner Solution with default parameters builds the following {partner-product-short-name} environment in the
+AWS Cloud.
+
+// Replace this example diagram with your own. Follow our wiki guidelines: https://w.amazon.com/bin/view/AWS_Quick_Starts/Process_for_PSAs/#HPrepareyourarchitecturediagram. Upload your source PowerPoint file to the GitHub {deployment name}/docs/images/ directory in its repository.
+
+[#architecture1]
+.Partner Solution architecture for {partner-product-short-name} on AWS
+image::../docs/deployment_guide/images/image1.png[Architecture]
+
+As shown in <<architecture1>>, this Partner Solution sets up the following:
+
+* A virtual private cloud (VPC) that spans three Availability Zones and includes three public subnets.
+* Three Swarm controller nodes that run the DTR and UCP services.
+* A cluster of Swarm nodes in an Auto Scaling group, so the cluster can grow dynamically as the load on the instances increases.
+* Three Elastic Load Balancing (ELB) load balancers in the public subnets. Two of these load balancers provide inbound access to the management consoles for UCP and DTR, and the third provides inbound access to customer applications running on the Swarm nodes.
+* Amazon Simple Storage Service (Amazon S3) for backing up the root certificate authorities (CAs).
+
+The deployment is automated by an AWS CloudFormation template. The template starts the installation process by creating all the required AWS resources such as the VPC, security groups, public subnets, Internet gateway, and the S3 bucket.
+
+It then launches the first Docker Swarm controller instances and goes through the installation process of the Docker Enterprise Edition and UCP containers. It backs up the root CAs created by the first UCP controllers to an S3 bucket.
+
+Once the first UCP controller is up and running, the template creates the other UCP controllers, creates the Docker Swarm nodes, and installs DTR. As with the first UCP controller node, all nodes are started by installing Docker Enterprise Edition, followed by running the appropriate UCP or DTR containers to join the cluster. Two ELB load balancers, one for UCP and one for DTR, are launched and automatically configured to provide resilient load balancing across the three Availability Zones. A third ELB load balancer is added to route traffic to customer applications running across the Swarm cluster. Additionally, UCP controllers and Swarm nodes are launched in an Auto Scaling group to provide self-healing and scaling functionality if needed. This architecture ensures that both UCP and DTR instances are spread across all three Availability Zones to ensure resiliency and high availability.

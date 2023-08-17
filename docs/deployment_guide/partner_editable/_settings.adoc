@@ -1,0 +1,17 @@
+:partner-solution-project-name: quickstart-docker
+:partner-solution-github-org: aws-quickstart
+:partner-product-name: Docker Enterprise Edition on the AWS Cloud
+:partner-product-short-name: Docker Enterprise
+:partner-company-name: Docker, Inc.
+:doc-month: January
+:doc-year: 2023
+//:partner-contributors: John Smith, {partner-company-name}
+// :other-contributors: Akua Mansa, Trek10
+//:aws-contributors: Janine Singh, AWS IoT Partner team
+:aws-ia-contributors: AWS Integration & Automation team
+:deployment_time: 25 minutes
+:default_deployment_region: us-west-1
+// :private_repo:
+
+
+// For instructions on creating this deployment guide, refer to "Build your AWS Partner Solution documentation" (https://aws-ia-us-west-2.s3.us-west-2.amazonaws.com/docs/content/index.html#/).
