@@ -1,0 +1,26 @@
+//Include any predeployment steps here, such as signing up for a Marketplace AMI or making any changes to a partner account. If there are no predeployment steps, leave this file empty.
+
+== Predeployment steps
+
+=== Register for a Docker EE Trial License
+
+Before you deploy the Quick Start, you must obtain a trial license for Docker EE.
+
+[arabic]
+. Create a Docker ID at https://hub.docker.com/register/ if you don’t already have one.
+. Open the Docker EE trial page at https://store.docker.com/editions/enterprise/docker-ee-trial and log in with your credentials.
+
+[#predeploy1]
+.Docker login screen
+image::../docs/deployment_guide/images/image2.png[Predeploy]
+
+[start=3]
+. Fill out the registration form and choose *Start Your Free Trial*.
+. On the next screen, download the license key.
+
+[#predeploy1]
+.Downloading the Docker license
+image::../docs/deployment_guide/images/image3.png[Predeploy]
+
+[start=5]
+. Open the license with a text editor. You’ll need this license during the Quick Start deployment process.

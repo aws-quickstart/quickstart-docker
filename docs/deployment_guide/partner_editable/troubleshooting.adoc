@@ -1,0 +1,27 @@
+// Add any unique troubleshooting steps here.
+
+For troubleshooting common Partner Solution issues, refer to the https://fwd.aws/rA69w?[AWS Partner Solution General Information Guide^] and https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html[Troubleshooting CloudFormation^].
+
+=== Additional Resources
+
+*AWS services*
+
+* AWS CloudFormation +
+https://aws.amazon.com/documentation/cloudformation/
+* Amazon EC2 +
+https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/
+* Amazon VPC +
+https://aws.amazon.com/documentation/vpc/
+
+*Docker*
+
+* Docker Enterprise Edition +
+https://www.docker.com/enterprise-edition
+* Docker Universal Control Plane +
+https://docs.docker.com/datacenter/ucp/1.1/overview/
+* Docker Trusted Registry +
+https://docs.docker.com/datacenter/dtr/2.4/guides/ +
+https://docs.docker.com/datacenter/dtr/2.0/configure/configuration/
+
+// == Resources
+// Uncomment section and add links to any external resources that are specified by the partner.
