@@ -2019,9 +2019,9 @@ Resources:
     Metadata:
       cfn-lint:
         config:
-          ignore_checks: [ EIAMPolicyWildcardAction ]
+          ignore_checks: [ EIAMPolicyActionWildcard ]
           ignore_reasons:
-            EIAMPolicyWildcardAction: >-
+            EIAMPolicyActionWildcard: >-
               Action This is required as it is for root key management.
     Properties:
       Description: "KMS Key used to encrypt the SQS queue"
