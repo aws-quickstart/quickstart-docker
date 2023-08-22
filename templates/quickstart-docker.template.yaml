@@ -706,6 +706,13 @@ Resources:
     DependsOn:
       - ProxyRole
       - WorkerRole
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [ EIAMPolicyWildcardResource ]
+          ignore_reasons:
+            EIAMPolicyWildcardResource: >-
+              Bt Design.
     Properties:
       PolicyDocument:
         Statement:
@@ -893,6 +900,7 @@ Resources:
   FileSystemGP:
     Condition: InstallCloudStorEFSPreReqs
     Properties:
+      Encrypted: True
       FileSystemTags:
         - Key: Name
           Value: !Join
@@ -943,7 +951,7 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                 Effect: Allow
-                Resource: arn:aws:logs:*:*:*
+                Resource: !Sub arn:${AWS::Partition}:logs:*:*:*
               - Action:
                   - ec2:DescribeAvailabilityZones
                 Effect: Allow
@@ -1726,6 +1734,13 @@ Resources:
     Type: AWS::IAM::InstanceProfile
   ProxyPolicies:
     DependsOn: ProxyRole
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [ EIAMPolicyWildcardResource ]
+          ignore_reasons:
+            EIAMPolicyWildcardResource: >-
+              By Design.
     Properties:
       PolicyDocument:
         Statement:
@@ -1928,6 +1943,13 @@ Resources:
     DependsOn:
       - ProxyRole
       - WorkerRole
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [ EIAMPolicyWildcardResource ]
+          ignore_reasons:
+            EIAMPolicyWildcardResource: >-
+              By Design.
     Properties:
       PolicyDocument:
         Statement:
@@ -1963,6 +1985,13 @@ Resources:
     DependsOn:
       - ProxyRole
       - WorkerRole
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [ EIAMPolicyWildcardResource ]
+          ignore_reasons:
+            EIAMPolicyWildcardResource: >-
+              By Design.
     Properties:
       PolicyDocument:
         Statement:
@@ -1985,10 +2014,35 @@ Resources:
       NotificationTargetARN: !GetAtt 'SwarmSQS.Arn'
       RoleARN: !GetAtt 'ProxyRole.Arn'
     Type: AWS::AutoScaling::LifecycleHook
+  SwarmSQSKMS:
+    Type: AWS::KMS::Key
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [ EIAMPolicyActionWildcard ]
+          ignore_reasons:
+            EIAMPolicyActionWildcard: >-
+              Action This is required as it is for root key management.
+    Properties:
+      Description: "KMS Key used to encrypt the SQS queue"
+      EnableKeyRotation: true
+      PendingWindowInDays: 20
+      KeyPolicy:
+        Version: 2012-10-17
+        Id: key-default-1
+        Statement:
+          - Sid: Enable IAM User Permissions
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:root
+            Action:
+              - kms:*
+            Resource: '*'
   SwarmSQS:
     Properties:
       MessageRetentionPeriod: 43200
       ReceiveMessageWaitTimeSeconds: 10
+      KmsMasterKeyId: !GetAtt SwarmSQSKMS.Arn
     Type: AWS::SQS::Queue
   SwarmSQSCleanup:
     Properties:
