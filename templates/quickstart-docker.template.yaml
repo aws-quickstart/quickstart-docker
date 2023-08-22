@@ -907,7 +907,7 @@ Resources:
             - - !Ref 'AWS::StackName'
               - EFS-GP
       PerformanceMode: generalPurpose
-      Encrypted: true
+      Encrypted: "true"
     Type: AWS::EFS::FileSystem
   FileSystemMaxIO:
     Condition: InstallCloudStorEFSPreReqs
@@ -2035,7 +2035,8 @@ Resources:
             Effect: Allow
             Principal:
               AWS: !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:root
-            Action: kms:*
+            Action:
+              - kms:*
             Resource: '*'
   SwarmSQS:
     Properties:
