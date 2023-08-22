@@ -2014,35 +2014,14 @@ Resources:
       NotificationTargetARN: !GetAtt 'SwarmSQS.Arn'
       RoleARN: !GetAtt 'ProxyRole.Arn'
     Type: AWS::AutoScaling::LifecycleHook
-  SwarmSQSKMS:
-    Type: AWS::KMS::Key
-    Metadata:
-      cfn-lint:
-        config:
-          ignore_checks: [ EIAMPolicyActionWildcard ]
-          ignore_reasons:
-            EIAMPolicyActionWildcard: >-
-              Action This is required as it is for root key management.
-    Properties:
-      Description: "KMS Key used to encrypt the SQS queue"
-      EnableKeyRotation: true
-      PendingWindowInDays: 20
-      KeyPolicy:
-        Version: 2012-10-17
-        Id: key-default-1
-        Statement:
-          - Sid: Enable IAM User Permissions
-            Effect: Allow
-            Principal:
-              AWS: !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:root
-            Action:
-              - kms:*
-            Resource: '*'
   SwarmSQS:
     Properties:
       MessageRetentionPeriod: 43200
       ReceiveMessageWaitTimeSeconds: 10
-      KmsMasterKeyId: !GetAtt SwarmSQSKMS.Arn
+      QueueName: SwarmSQSQueue
+      SqsManagedSseEnabled: true
+      KmsDataKeyReusePeriodSeconds: 900
+      VisibilityTimeout: 30
     Type: AWS::SQS::Queue
   SwarmSQSCleanup:
     Properties:
