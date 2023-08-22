@@ -900,6 +900,7 @@ Resources:
   FileSystemGP:
     Condition: InstallCloudStorEFSPreReqs
     Properties:
+      Encrypted: True
       FileSystemTags:
         - Key: Name
           Value: !Join
@@ -907,7 +908,6 @@ Resources:
             - - !Ref 'AWS::StackName'
               - EFS-GP
       PerformanceMode: generalPurpose
-      Encrypted: "true"
     Type: AWS::EFS::FileSystem
   FileSystemMaxIO:
     Condition: InstallCloudStorEFSPreReqs
