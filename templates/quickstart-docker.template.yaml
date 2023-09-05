@@ -2027,6 +2027,8 @@ Resources:
     Properties:
       MessageRetentionPeriod: 43200
       ReceiveMessageWaitTimeSeconds: 10
+      SqsManagedSseEnabled: true
+      KmsDataKeyReusePeriodSeconds: 900
     Type: AWS::SQS::Queue
   SwarmSQSCleanupPolicy:
     DependsOn:
