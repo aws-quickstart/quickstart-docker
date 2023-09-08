@@ -738,6 +738,9 @@ Resources:
   DDCBucket:
     DeletionPolicy: Retain
     Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
   DTRLoadBalancer:
     DependsOn:
       - AttachGateway
